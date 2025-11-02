@@ -7,7 +7,7 @@ import FeaturesSection from './components/FeaturesSection';
 import TestimonialSection from './components/TestimonialSection';
 import CtaSection from './components/CtaSection';
 import FooterSection from './components/FooterSection';
-
+import './App.css';
 import SignUpPage from "./Pages/SignUpPage";
 import SignInPage from "./Pages/SignInPage";
 import Course from "./Pages/Course";
