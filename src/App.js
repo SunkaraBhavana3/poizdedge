@@ -1,7 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
+import CourseFilterBar from './components/CourseFilterBar';
 import StatsBar from './components/StatsBar';
+import DemoSchedule from './components/DemoSchedule';
+import ProgramValueComparison from './components/ProgramValueComparison';
+
 import HowItWorksSection from './components/HowItWorksSection';
 import FeaturesSection from './components/FeaturesSection';
 import TestimonialSection from './components/TestimonialSection';
@@ -30,9 +34,12 @@ function App() {
           element={
             <>
               <HeroSection />
+              <CourseFilterBar />
               <StatsBar />
+              <ProgramValueComparison />
               <FeaturesSection />
               <HowItWorksSection />
+              <DemoSchedule />
               <TestimonialSection />
               <CtaSection />
             </>
