@@ -1,6 +1,4 @@
 import React from 'react';
-// Assuming lucide-react is available, even though no specific icon is used in this image, 
-// keeping it here for consistency with other sections.
 import { ArrowRight } from 'lucide-react'; 
 
 const CtaSection = () => {
@@ -22,19 +20,19 @@ const CtaSection = () => {
                 </p>
 
                 <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                    {/* Primary Button: Sign Up Now */}
+                    {/* Primary Button: Sign Up Now - MODIFIED CLASSES */}
                     <a 
                         href="#" 
-                        className="px-8 py-4 text-white font-semibold rounded-full shadow-xl transition duration-300 transform hover:scale-105"
+                        className="px-6 py-3 text-white font-semibold rounded-lg transition duration-300 transform hover:scale-105"
                         style={{ backgroundColor: accentLightBlue }}
                     >
                         Sign Up Now
                     </a>
                     
-                    {/* Secondary Button: Browse Courses */}
+                    {/* Secondary Button: Browse Courses - MODIFIED CLASSES */}
                     <a 
                         href="#" 
-                        className="px-8 py-4 text-lg font-semibold rounded-full border-2 transition duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+                        className="px-6 py-3 font-semibold rounded-lg border-2 transition duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
                         style={{ borderColor: 'white', color: 'white' }}
                     >
                         <span>Browse Courses</span>
