@@ -1,7 +1,7 @@
 // File: components/ProgramValueComparison.js
 
 import React from 'react';
-
+import './ProgramValueComparison.css';
 const comparisonData = [
     { 
         type: "Online Course", 

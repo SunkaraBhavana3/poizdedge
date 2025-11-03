@@ -1,7 +1,7 @@
 // File: components/CourseFilterBar.js
 
 import React from 'react';
-
+import './CourseFilterBar.css';
 const subjects = ["Mathematics", "Science", "English", "History", "GCP Mastery"];
 const grades = ["Class 10", "Class 12", "Undergrad", "Professional Cert"];
 

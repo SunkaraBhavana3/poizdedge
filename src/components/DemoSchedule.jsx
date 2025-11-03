@@ -1,7 +1,7 @@
 // File: components/DemoSchedule.js
 
 import React from 'react';
-
+import './DemoSchedule.css';
 const demoSchedule = [
     { subject: "Advanced Mathematics", time: "Today, 7:00 PM IST", link: "#" },
     { subject: "Clinical Research (GCP)", time: "Tomorrow, 5:00 PM IST", link: "#" },
