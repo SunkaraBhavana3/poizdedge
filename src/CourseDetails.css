@@ -1,0 +1,133 @@
+/* ===============================
+   ⭐ Udemy Style Modules List
+   =============================== */
+
+/* Wrapper */
+.modules-list {
+  margin-top: 20px;
+}
+
+/* Each row (module item) */
+.module-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Hover effect (only for unlocked) */
+.module-row.unlocked:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Locked look */
+.module-row.locked {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background: #f1f1f1;
+}
+
+/* Left side: Play + Name */
+.module-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Play button */
+.play-btn {
+  background: #28a745;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.unlocked .play-btn:hover {
+  background: #1f8a39;
+}
+
+/* Locked button */
+.lock-icon {
+  font-size: 22px;
+  color: #333;
+}
+
+/* Module name/title */
+.module-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Duration text */
+.module-duration {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Right side */
+.module-right {
+  font-weight: bold;
+  color: #888;
+}
+
+/* Video container */
+.video-container {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.video-container video {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+/* ===============================
+   QUIZ BOX STYLE
+   =============================== */
+
+.quiz-box {
+  margin-top: 25px;
+  padding: 20px;
+  background: #fff7f7;
+  border: 1px solid #ffcccc;
+  border-radius: 10px;
+}
+
+.quiz-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff3d3d;
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+@media (max-width: 768px) {
+  .module-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .module-right {
+    margin-top: 8px;
+  }
+
+  .module-title {
+    font-size: 16px;
+  }
+}
