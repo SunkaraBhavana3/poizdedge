@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Auto-Connecting Family Tree</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@balkangraph/orgchart.js@9/orgchart.js"></script> 
+    
+    <style>
+        /* --- General Layout --- */
+        body, html { margin: 0; padding: 0; font-family: sans-serif; height: 100%; }
+        #mainContainer { display: flex; height: 100vh; }
+        #treeArea { flex: 2; padding: 20px; overflow: auto; background-color: #f0f0f0; }
+        #formArea { flex: 1; padding: 20px; background-color: #e9e9e9; border-left: 2px solid #ccc; box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); }
+        .hidden { display: none; }
+        
+        /* --- Visualization Area --- */
+        #visualTree { 
+            height: 80vh; 
+            width: 100%;
+            background: white; 
+            border-radius: 8px; 
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        
+        /* --- Form/Member List Styling --- */
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .form-button { 
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            width: 100%; 
+        }
+        .form-button:hover { background-color: #45a049; }
+        
+        /* Styling for the Add Relation buttons in the list */
+        #memberList .form-button { 
+            background-color: #007bff; 
+            margin-bottom: 5px; 
+        }
+        #memberList .form-button:hover { 
+            background-color: #0056b3; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mainContainer">
+        <div id="treeArea">
+            <h2>Auto-Connecting Family Tree</h2>
+            <p>Use the form on the right to add relations. The chart will automatically render the nodes, place parents above children, and draw the connecting lines.</p>
+            
+            <div id="visualTree">
+                <p style="text-align: center; margin-top: 50px;">Attempting to load visualization library...</p>
+            </div>
+            
+            <h3>Current Members (Click to Add Relation)</h3>
+            <ul id="memberList" style="list-style: none; padding: 0;">
+                </ul>
+
+        </div>
+
+        <div id="formArea" class="hidden">
+            <h2>Add New Relation</h2>
+            <form id="relationForm">
+                <p>Adding relation to: <strong id="currentParentName"></strong></p>
+                <input type="hidden" id="currentParentId" value="">
+
+                <label for="relationDropdown">Select Relation Type:</label>
+                <select id="relationDropdown" required>
+                    </select>
+
+                <label for="newName">Relative's Name:</label>
+                <input type="text" id="newName" required placeholder="Enter the name">
+                
+                <label for="newRole">Role/Title (Optional):</label>
+                <input type="text" id="newRole" placeholder="e.g., Duchess of Cambridge">
+                
+                <label for="newImage">Image URL (Optional):</label>
+                <input type="url" id="newImage" placeholder="Paste image link for node">
+
+                <button type="submit" class="form-button">Add Member to Tree</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const RELATION_TYPES = [
+            'mother', 'father', 'spouse', 'sister', 'brother',
+            'daughter', 'son', 'pet'
+        ];
+
+        let nodeCounter = 1;
+        const formArea = document.getElementById('formArea');
+        const relationDropdown = document.getElementById('relationDropdown');
+        const relationForm = document.getElementById('relationForm');
+        const memberList = document.getElementById('memberList');
+        const visualTreeContainer = document.getElementById('visualTree');
+        
+        // Global chart variable
+        let chart = null; 
+
+        // --- Core Family Data Structure (Flat array for OrgChart.js) ---
+        let familyData = [
+            {
+                id: 'person_0',
+                pid: '', // Root node has no parent
+                name: 'Self (Root)',
+                title: 'The Starting Point',
+                img: 'https://via.placeholder.com/60/FFD700/000000?text=S', 
+            }
+        ];
+
+        // --- Setup: Populate the dropdown on load ---
+        RELATION_TYPES.forEach(relation => {
+            const display = relation === 'pet' ? 'Pet (Child)' : relation.charAt(0).toUpperCase() + relation.slice(1);
+            const option = document.createElement('option');
+            option.value = relation;
+            option.textContent = display;
+            relationDropdown.appendChild(option);
+        });
+        
+        // --- UI Logic (Form & Member List) ---
+        function prepareForm(parentId, parentName) {
+            document.getElementById('currentParentId').value = parentId;
+            document.getElementById('currentParentName').textContent = parentName;
+            formArea.classList.remove('hidden');
+        }
+
+        relationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const parentId = document.getElementById('currentParentId').value;
+            const relationType = relationDropdown.value;
+            const newName = document.getElementById('newName').value.trim();
+            const newRole = document.getElementById('newRole').value.trim();
+            const newImage = document.getElementById('newImage').value.trim() || 'https://via.placeholder.com/60/79F3F9/000000?text=P';
+
+            if (newName && parentId && relationType) {
+                addNewMember(parentId, relationType, newName, newRole, newImage);
+                relationForm.reset();
+                formArea.classList.add('hidden');
+            } else {
+                alert("Please fill out Name, Parent, and Relation.");
+            }
+        });
+
+        function addNewMember(parentId, relationType, name, role, image) {
+            const newNodeId = `person_${nodeCounter++}`;
+            let parentNodeId = parentId;
+            let marriedId = null;
+
+            const currentPerson = familyData.find(p => p.id === parentId);
+
+            if (relationType === 'spouse') {
+                marriedId = parentId;
+                parentNodeId = currentPerson.pid || '';
+                // Update the current person to point back to the new spouse
+                currentPerson.mid = newNodeId; 
+            } else if (['mother', 'father'].includes(relationType)) {
+                // For simplification, we treat the new parent as a regular link.
+                // NOTE: Proper parent modeling requires complex marriage nodes handled by the library.
+                parentNodeId = parentId;
+                alert(`Note: Adding a biological parent (${relationType}) is modeled as a direct link for simplification. A real family tree uses intermediate marriage nodes.`);
+            } else if (['daughter', 'son', 'pet', 'brother', 'sister'].includes(relationType)) {
+                parentNodeId = parentId;
+            }
+
+            const newMember = {
+                id: newNodeId,
+                pid: parentNodeId, // Parent ID for hierarchy
+                mid: marriedId,    // Spouse ID for marriage line
+                name: name,
+                title: role || relationType.charAt(0).toUpperCase() + relationType.slice(1),
+                img: image,
+            };
+            
+            familyData.push(newMember);
+            
+            updateMemberList();
+            renderTreeVisualization(familyData); 
+        }
+        
+        function updateMemberList() {
+            memberList.innerHTML = '';
+            familyData.sort((a, b) => a.id.localeCompare(b.id)).forEach(person => {
+                const li = document.createElement('li');
+                const nameDisplay = person.title && person.title !== 'The Starting Point' ? `${person.name}, ${person.title}` : person.name;
+                
+                const btn = document.createElement('button');
+                btn.textContent = `Add Relation to: ${nameDisplay}`;
+                btn.onclick = () => prepareForm(person.id, nameDisplay);
+                btn.className = 'form-button';
+                
+                li.appendChild(btn);
+                memberList.appendChild(li);
+            });
+        }
+        
+
+        // --- RENDERER: INITIALIZES AND UPDATES THE CHART USING ORGCHART.JS ---
+        function renderTreeVisualization(data) {
+            const container = document.getElementById('visualTree');
+            
+            if (!chart) {
+                // Check if the library is loaded before attempting to use it
+                if (typeof OrgChart === 'undefined') {
+                    container.innerHTML = `
+                        <p style="text-align: center; margin-top: 50px; color: red; font-weight: bold;">
+                            ERROR: OrgChart library is not defined.
+                        </p>
+                        <p style="text-align: center;">
+                            Your browser (due to security/network settings) is blocking the external script links in the &lt;head&gt; section.
+                            To fix this, please follow Option 2 (Download Files Locally) from the previous response.
+                        </p>
+                    `;
+                    return;
+                }
+                
+                // Initialize the chart instance only once
+                chart = new OrgChart(container, {
+                    nodes: data, 
+                    nodeBinding: {
+                        field_0: "name",   
+                        field_1: "title",   
+                        img_0: "img"        
+                    },
+                    template: "mery", // Use a clean template
+                    layout: OrgChart.tree, 
+                    menu: {
+                        pdf: { text: "Export PDF" },
+                        png: { text: "Export PNG" }
+                    },
+                    mouseScrol: OrgChart.action.zoom, 
+                    enableSearch: false
+                });
+            } else {
+                // If the chart exists, just update the data
+                chart.load(data);
+            }
+        }
+
+        // *** CRITICAL FIX: Ensure code execution waits for the library to load ***
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Initial calls now run AFTER the HTML and external scripts have been processed
+            updateMemberList();
+            renderTreeVisualization(familyData);
+        });
+
+    </script>
+
+</body>
+</html>

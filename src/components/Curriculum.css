@@ -1,0 +1,58 @@
+/* Curriculum.css - Supporting the nested structure and states */
+
+/* Assume :root variables from CourseDetails.css are available */
+
+.curriculum-card {
+    border-radius: 8px;
+    border: none;
+    overflow: hidden; /* Ensures rounded corners are respected */
+}
+
+.module-group-item {
+    border-bottom: 1px solid var(--udemy-secondary);
+}
+.module-group-item:last-child {
+    border-bottom: none;
+}
+
+.module-item {
+    transition: background-color 0.2s, border-left 0.2s;
+    user-select: none;
+}
+
+.module-item.unlocked:hover {
+    background-color: #f0f0f0;
+}
+
+.module-item.selected {
+    background-color: rgba(86, 36, 208, 0.1); /* Light purple highlight */
+    border-left: 5px solid var(--udemy-primary);
+    padding-left: 19px !important; /* Adjust padding due to border width */
+}
+
+.module-item.locked {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background-color: #fafafa;
+}
+
+.module-title {
+    font-size: 1rem;
+}
+
+/* Topics List Styling */
+.topic-list {
+    border-left: 5px solid var(--udemy-secondary); /* Vertical line for topics */
+    margin-left: 10px;
+}
+
+.topic-item {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.05);
+}
+
+.quiz-marker {
+    font-style: italic;
+    color: var(--udemy-text) !important;
+}

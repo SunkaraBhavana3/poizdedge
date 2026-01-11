@@ -1,0 +1,30 @@
+/* Remove underline from all links and buttons that behave like links */
+html {
+  scroll-behavior: smooth;
+}
+
+a,
+button,link {
+  text-decoration: none;
+}
+
+body{
+  font-family: 'Inter', sans-serif;
+  background-color: white;
+}
+
+/* Optional: remove blue highlight when clicked (mobile-friendly) */
+a:focus,
+a:active,
+button:focus,
+button:active {
+  outline: none;
+  text-decoration: none;
+}
+
+/* Optional hover effect to make it feel interactive */
+a:hover,
+button:hover {
+  text-decoration: none;
+  cursor: pointer;
+}

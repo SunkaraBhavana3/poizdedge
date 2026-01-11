@@ -1,0 +1,160 @@
+/* --- Course Details Container --- */
+.course-details-container {
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* --- Stat Cards Grid --- */
+.stat-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon {
+    font-size: 24px;
+    color: #0077b6; /* Coursera blue */
+    margin-bottom: 10px;
+}
+
+.stat-title {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin: 5px 0 0 0;
+}
+
+/* --- Feature and Learning Lists --- */
+.feature-list-section h3, .info-box h3, .features-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.list-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 15px 30px;
+}
+
+.list-item {
+    display: flex;
+    align-items: flex-start;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #555;
+}
+
+.check-icon {
+    color: #00a877; /* Green checkmark */
+    font-size: 16px;
+    margin-right: 10px;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+/* Specific styling for the lighter Course Features box */
+.course-features-box {
+    background-color: #f8fbff; /* Very light blue background */
+    border: 1px solid #e0eaff;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 40px 0;
+}
+
+/* --- Requirements and Who This Course Is For (Info Boxes) --- */
+.info-box {
+    padding: 10px 0;
+}
+
+.info-box ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 15px;
+    color: #555;
+}
+
+.info-box ul li {
+    margin-bottom: 10px;
+    padding-left: 20px; /* Space for the bullet point */
+    position: relative;
+}
+
+.info-box ul li::before {
+    content: "•";
+    color: #555;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* --- Instructor Profile --- */
+.instructor-profile {
+    padding: 20px 0;
+}
+
+.instructor-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding-top: 10px;
+}
+
+.instructor-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.instructor-details h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+}
+
+.instructor-title {
+    font-size: 14px;
+    color: #0077b6;
+    margin: 0 0 10px 0;
+}
+
+.instructor-bio {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.instructor-stats span {
+    font-size: 13px;
+    color: #777;
+    margin-right: 20px;
+}
+
+/* --- Divider --- */
+.divider {
+    border: 0;
+    height: 1px;
+    background: #eee;
+    margin: 40px 0;
+}

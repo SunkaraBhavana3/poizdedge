@@ -1,0 +1,115 @@
+/* 1. SECTION CONTAINER STYLES (Adjusted for the new header) */
+.training-section {
+    padding: 60px 20px;
+    background-color: #f8f9fa; 
+    flex-wrap: wrap; 
+}
+
+/* New header to state the unique selling point */
+.unique-value-header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.unique-value-header h2 {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+.unique-value-header p {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Container for the two cards */
+.card-container {
+    align-items: center;
+    display: flex;
+    justify-content: center; 
+    gap: 40px;
+    width: 100%;
+
+    flex-wrap: wrap;
+}
+
+
+/* 2. BASE CARD STYLES */
+.training-card {
+    /* Kept similar, but now takes 48% to fit nicely */
+    width: 48%; 
+    min-width: 300px; 
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+    /* This transition applies to both cards */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    border: 1px solid #e0e0e0;
+    /* Increased height for visual balance without the button */
+    min-height: 220px; 
+    /* MIDDLE CENTERING LOGIC */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertical Center */
+    align-items: center;     /* Horizontal Center */
+    text-align: center;
+}
+
+/* ✨ ADDED: Hover effect for BOTH cards */
+.training-card:hover {
+    transform: translateY(-8px); /* Lifts the card slightly */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+}
+
+
+/* 3. CARD TEXT STYLES (No changes needed) */
+.card-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.card-description {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 0; /* No button space needed */
+}
+
+/* 4. SPECIFIC CARD COLORING (No changes needed) */
+.course-card {
+    background-color: #e6f7ff; 
+    border-left: 5px solid #007bff; 
+}
+.course-card .card-title {
+    color: #007bff; 
+}
+.interview-card {
+    background-color: #e6ffe6; 
+    border-left: 5px solid #28aa46; 
+}
+.interview-card .card-title {
+    color: #28a745; 
+}
+
+/* 5. CTA BUTTON STYLES (REMOVED) - No need for these styles anymore! */
+
+/* 6. RESPONSIVENESS (For smaller screens) */
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column; 
+        gap: 20px; /* Reduced gap when stacked */
+    }
+    
+    .training-card {
+        width: 100%; 
+        margin: 0 auto; 
+    }
+    .unique-value-header h2 {
+        font-size: 1.7rem;
+    }
+    .unique-value-header p {
+        font-size: 1rem;
+    }
+}

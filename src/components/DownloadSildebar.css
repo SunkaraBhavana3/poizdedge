@@ -1,0 +1,134 @@
+/* ---------------------------------------------------------------------- */
+/* 1. SECTION CONTAINER: CENTERS THE WHOLE COMPONENT */
+/* ---------------------------------------------------------------------- */
+.download-section-container {
+  width: 90%;               /* Use almost full width on small devices */
+  max-width: 800px;         /* Keep it constrained on large screens */
+  margin: 20px auto; 
+  padding: 10px;
+}
+
+.download-section-container h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.4em;
+  color: #123456; 
+}
+
+/* ---------------------------------------------------------------------- */
+/* 2. CARDS WRAPPER: CENTERS THE TWO CARDS INSIDE THE CONTAINER */
+/* ---------------------------------------------------------------------- */
+.download-cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;           /* Allows wrapping on smaller screens */
+  gap: 20px;                 /* Space between cards */
+  justify-content: center;   /* Horizontally center cards */
+}
+
+/* ---------------------------------------------------------------------- */
+/* 3. CARD STYLING */
+/* ---------------------------------------------------------------------- */
+.download-register-card {
+  display: flex; 
+  align-items: center;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #007bff; 
+  width: 100%;               /* Full width on small devices */
+  max-width: 350px;          /* Constrain width on desktop */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.download-register-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Card Icon */
+.card-icon {
+  font-size: 24px;
+  margin-right: 15px;
+  padding: 5px;
+  background-color: #f0f0ff; 
+  border-radius: 4px;
+}
+
+/* Card Content */
+.card-content {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  flex-grow: 1; 
+  flex-wrap: wrap;           /* Wrap content if space is tight */
+  gap: 10px;                 /* Space between title and button on small screens */
+}
+
+/* Card Title */
+.card-title {
+  margin: 0;
+  font-size: 1em;
+  color: #333;
+  font-weight: normal; 
+}
+
+.title-bold {
+  font-weight: 800;
+  color: #123456; 
+  margin-right: 4px; 
+}
+
+/* Download Button */
+.register-button {
+  text-decoration: none;
+  background-color: #007bff; 
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap; 
+  transition: background-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.register-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.arrow {
+  margin-left: 5px;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 4. MEDIA QUERIES: MOBILE FRIENDLY */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .download-cards-wrapper {
+    flex-direction: column;  /* Stack cards vertically */
+    gap: 15px;
+  }
+
+  .download-register-card {
+    max-width: 100%;         /* Full width on mobile */
+  }
+
+  .card-content {
+    flex-direction: column;  /* Stack title above button */
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .register-button {
+    width: 100%;             /* Button stretches on mobile */
+    justify-content: center;
+  }
+
+  .card-title {
+    font-size: 0.95em;
+  }
+}

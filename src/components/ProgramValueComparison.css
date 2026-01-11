@@ -1,0 +1,138 @@
+/* --- ProgramValueComparison.css --- */
+
+/* Section Container */
+.value-comparison-section {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #fafbfc;
+}
+
+.value-comparison-section h2 {
+  color: #1a2a4b;
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.value-subtitle {
+  color: #6c757d;
+  font-size: 1rem;
+  margin-bottom: 35px;
+}
+
+/* --- Grid Layout (Exactly 2 Cards per Row) --- */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Exactly 2 per row */
+  gap: 40px; /* Space between cards */
+  max-width: 1000px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: start;
+  padding: 0 20px;
+}
+
+/* --- Classic Card --- */
+.comparison-card {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 25px 20px;
+  text-align: left;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.comparison-card:hover {
+  transform: translateY(-4px);
+  border-color: #007bff;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Card Header --- */
+.card-header {
+  margin-bottom: 18px;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  background-color: #eaf2ff;
+  color: #0056b3;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Price */
+.price-tag {
+  font-size: 1.6rem;
+  color: #1a2a4b;
+  margin-top: 5px;
+  font-weight: 700;
+}
+
+/* Feature List */
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 25px;
+}
+
+.feature-list li {
+  padding: 8px 0;
+  font-size: 0.95rem;
+  color: #495057;
+  border-bottom: 1px dashed #e9ecef;
+  display: flex;
+  align-items: center;
+}
+
+.feature-list li:last-child {
+  border-bottom: none;
+}
+
+.check {
+  color: #007bff;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+/* --- Button --- */
+.cta-button {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+
+.badge{
+  background-color: #0056b3;
+}
+.comparison-card.card-3 .badge {
+  background-color: #f1e4ff;
+    background-color: #0056b3;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .comparison-grid {
+    grid-template-columns: 1fr; /* Stack cards on small screens */
+    gap: 25px;
+  }
+}
