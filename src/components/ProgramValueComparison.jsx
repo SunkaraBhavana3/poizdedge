@@ -1,257 +1,173 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
+import EnrollModal from "./EnrollModal"; // Make sure path is correct
 
-// // --- Styles Injection Function (Replacing ProgramValueComparison.css) ---
-// const injectStyles = () => {
-//     const css = `
-//     /* General Styles */
-//     body {
-//         font-family: 'Inter', sans-serif;
-//         background-color: #f5f7fa;
-//         margin: 0;
-//         padding: 0;
-//     }
-
-//     .value-comparison-section {
-//         max-width: 1200px;
-//         margin: 60px auto;
-//         padding: 20px;
-//         text-align: center;
-//     }
-
-//     .value-comparison-section h2 {
-//         font-size: 2.25rem;
-//         font-weight: 800;
-//         color: #333; /* Slightly darker main color */
-//         margin-bottom: 10px;
-//     }
-
-//     .value-subtitle {
-//         font-size: 1.1rem;
-//         color: #666;
-//         margin-bottom: 40px;
-//     }
-
-//     /* Comparison Grid */
-//     .comparison-grid {
-//         display: grid;
-//             grid-template-columns: repeat(2, 1fr); 
-//         gap: 25px;
-//         align-items: stretch;
-//     }
-
-//     /* Comparison Card */
-//     .comparison-card {
-//         background-color: white;
-//         border-radius: 12px;
-//         border: 1px solid #e0e0e0; 
-//         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Lighter shadow */
-//         padding: 30px;
-//         transition: transform 0.3s ease, box-shadow 0.3s ease;
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: space-between;
-//         min-height: 420px; /* Slightly increased height for better visual spacing */
-//         text-align: left; /* Align card content left */
-//     }
-
-//     .comparison-card:hover {
-//         transform: translateY(-3px);
-//         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-//     }
-    
-//     .card-header {
-//         margin-bottom: 25px;
-//     }
-    
-//     /* --- BADGE STYLES (Clean Light Blue Look) --- */
-//     .badge {
-//         display: inline-block;
-//         font-size: 0.85rem;
-//         font-weight: 600;
-//         padding: 4px 10px;
-//         border-radius: 6px; /* Less rounded corners */
-//         margin-bottom: 15px;
-//         text-transform: uppercase;
-//         letter-spacing: 0.5px;
-//         background-color: #f0f8ff; /* Very light blue background */
-//         color: #0b3d91; /* Dark blue text */
-//         border: 1px solid #d0e7ff; /* Subtle border */
-//     }
-    
-//     /* --- PRICE TAG STYLES --- */
-//     .price-tag {
-//         font-size: 2.2rem;
-//         font-weight: 800;
-//         color: #333; /* Dark price text */
-//         margin: 0;
-//         line-height: 1.1;
-//     }
-
-//     /* --- NEW Description Style --- */
-//     .card-description {
-//         font-size: 0.95rem;
-//         color: #888;
-//         margin-top: 5px;
-//         margin-bottom: 0;
-//         line-height: 1.4;
-//     }
-    
-//     /* Feature List */
-//     .feature-list {
-//         list-style: none;
-//         padding: 0;
-//         margin-top: 15px;
-//         margin-bottom: 30px;
-//         flex-grow: 1;
-//     }
-
-//     .feature-list li {
-//         font-size: 1rem;
-//         color: #555;
-//         padding: 8px 0;
-//         display: flex;
-//         align-items: flex-start; 
-//         line-height: 1.5;
-//         font-weight: 500;
-//     }
-    
-//     /* Checkmark styling */
-//     .check {
-//         font-weight: 900;
-//         color: #007bff; /* Primary blue checkmark */
-//         margin-right: 10px;
-//         font-size: 1rem;
-//         line-height: 1.5; /* Align with text */
-//         flex-shrink: 0; 
-//     }
-    
-//     /* The bold feature label (e.g., **Access**) is part of the feature text, but we'll remove explicit strong tags here for the cleaner look */
-//     .feature-list li span:nth-child(2) {
-//         font-weight: 700;
-//         margin-right: 5px; 
-//     }
-
-//     /* --- CTA BUTTON STYLES (Bright Blue as per image) --- */
-//     .cta-button {
-//         background-color: #007bff; /* Bright Primary Blue */
-//         color: white;
-//         border: none;
-//         padding: 14px 25px;
-//         border-radius: 8px;
-//         font-size: 1rem;
-//         font-weight: 600; 
-//         cursor: pointer;
-//         transition: background-color 0.3s, transform 0.1s;
-//         width: 100%;
-//         text-transform: uppercase;
-//         letter-spacing: 0.5px;
-//         box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-//     }
-
-//     .cta-button:hover {
-//         background-color: #0056b3;
-//         transform: translateY(-1px);
-//     }
-    
-//     /* Mobile Responsiveness */
-//     @media (max-width: 768px) {
-//         .value-comparison-section {
-//             margin: 30px auto;
-//         }
-//         .value-comparison-section h2 {
-//             font-size: 1.75rem;
-//         }
-//         .comparison-grid {
-//             grid-template-columns: 1fr;
-//         }
-//         .comparison-card {
-//             min-height: auto;
-//         }
-//     }
-//     `;
-//     const styleTag = document.createElement('style');
-//     styleTag.type = 'text/css';
-//     styleTag.appendChild(document.createTextNode(css));
-//     document.head.appendChild(styleTag);
-// };
-import './ProgramValueComparison.css';
-// --- Component Logic ---
-
-const comparisonData = [
-    { 
-        type: "Online Course", 
-        price: "Starting at 4999", 
-        description: "Ideal for beginners who need flexible, self-paced access to foundational materials.", // Added description
-        features: [
-            { label: "Access", value: "3 Months" },
-            { label: "Support", value: "Community Forums" },
-            { label: "Key Feature", value: "Self-paced flexibility" },
-        ]
-    },
-    { 
-        type: "Live Classes", 
-        price: "5999 / 3 Months", 
-        description: "The perfect balance of structured learning, dedicated support, and ongoing practice.", // Added description
-        features: [
-            { label: "Access", value: "Full Year" },
-            { label: "Support", value: "Live Q&A Sessions" },
-            { label: "Key Feature", value: "Scheduled structure & interaction" },
-        ]
-    },
-    { 
-        type: "Classic Mentorship", 
-        price: "9999 / 3 Months", 
-        description: "The perfect balance of structured learning, dedicated support, and ongoing practice.", // Added description
-        features: [
-            { label: "Access", value: "Full Year" },
-            { label: "Support", value: "Live Q&A Sessions" },
-            { label: "Key Feature", value: "Scheduled structure & interaction" },
-        ]
-    },
-    { 
-        type: "Premium Mentorship", 
-        price: "12999 / Year", 
-        description: "Accelerate your career with personalized feedback and direct, unlimited 1:1 instructor time.", // Added description
-        features: [
-            { label: "Access", value: "Lifetime" },
-            { label: "Support", value: "1:1 Instructor Chat" },
-            { label: "Key Feature", value: "Personalized career guidance" },
-        ]
-    },
+/* -------------------- PLAN DATA -------------------- */
+const coursePlans = [
+  {
+    tier: "Online",
+    price: "₹4,999",
+    description: "Ideal for beginners who need flexible, self-paced access.",
+    keyFeature: "Self-paced flexibility",
+    access: "3 Months",
+    support: "Community Forums",
+  },
+  {
+    tier: "Intermediate",
+    price: "₹9,999",
+    description: "Structured learning with basic instructor support.",
+    keyFeature: "Structured Learning Path",
+    access: "6 Months",
+    support: "Email / Chat Support",
+  },
+  {
+    tier: "Classic",
+    price: "₹14,999",
+    description: "Our most popular option including live classes.",
+    keyFeature: "Live Classes & Doubt Clearing",
+    access: "9 Months",
+    support: "Dedicated Mentor",
+    popular: true,
+  },
+  {
+    tier: "Premium",
+    price: "₹24,999",
+    description: "Ultimate package with 1:1 mentorship and placement.",
+    keyFeature: "1:1 Mentorship & Placement",
+    access: "1 Year + Lifetime",
+    support: "Personal Coach",
+  },
 ];
 
-const ProgramValueComparison = () => {
-    return (
-        <div className="value-comparison-section">
-            <h2>Choose Your Path to Mastery</h2>
-            <p className="value-subtitle">Select the learning format that fits your pace, budget, and goals.</p>
-            
-            <div className="comparison-grid">
-                {comparisonData.map((item, index) => (
-                    <div key={index} className={`comparison-card card-${index + 1}`}>
-                        <div className="card-content-top">
-                            <div className="card-header">
-                                <span className="badge">{item.type}</span> 
-                                <h3 className="price-tag">{item.price}</h3>
-                                <p className="card-description">{item.description}</p> {/* New Description */}
-                            </div>
-                            <ul className="feature-list">
-                                {item.features.map((feature, idx) => (
-                                    <li key={idx}>
-                                        <span className="check">✓</span> 
-                                        <strong>{feature.label}:</strong> {feature.value}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <button className="cta-button">
-                            View Details
-                        </button>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+/* -------------------- RESPONSIVE STYLES -------------------- */
+const injectPlanStyles = () => {
+  if (document.getElementById("choose-plan-styles")) return;
+
+  const css = `
+    .pricing-grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin: 30px auto;
+      max-width: 1200px;
+      padding: 0 12px;
+    }
+    .pricing-card {
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.05);
+      border: 1px solid #e1e9f5;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s ease;
+      max-width: 280px;
+      margin: auto;
+    }
+    .pricing-card:hover { 
+      transform: translateY(-6px); 
+      border-color: #0b3d91; 
+      box-shadow: 0 14px 30px rgba(11,61,145,0.15);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0b3d91;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .plan-title { color: #0b3d91; font-size: clamp(1.05rem, 2.5vw, 1.2rem); font-weight:700;  }
+    .price-text { font-size: clamp(1.6rem, 5vw, 2rem); font-weight: 900; color:#0b3d91; margin:10px 0;  }
+    .plan-desc { font-size:0.82rem; color:#666; line-height:1.4; margin-bottom:10px; }
+    .pricing-card ul { list-style:none; padding:0; margin:15px 0; flex-grow:1; }
+    .pricing-card li { display:flex; gap:10px; margin-bottom:10px; font-size:0.85rem; color:#555; }
+    .btn-plan-enroll {
+      display:block;
+      width:100%;
+      padding:12px 0;
+      background:#0b3d91;
+      color:#fff;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:0.95rem;
+      transition:0.3s;
+      border:none;
+      cursor:pointer;
+    }
+    .btn-plan-enroll:hover { background:#083070; transform:translateY(-1px); }
+    @media (max-width:480px) { .pricing-card { max-width:100%; padding:20px 16px; } .price-text { font-size:1.6rem; } }
+  `;
+
+  const style = document.createElement("style");
+  style.id = "choose-plan-styles";
+  style.innerHTML = css;
+  document.head.appendChild(style);
 };
 
-export default ProgramValueComparison;
+/* -------------------- COMPONENT -------------------- */
+const ChooseYourPlan = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("");
+
+  useEffect(() => {
+    injectPlanStyles();
+  }, []);
+
+  const handleEnrollClick = (planTier) => {
+    setSelectedPlan(planTier);
+    setShowModal(true);
+  };
+
+  return (
+    <>
+      <h2 style={{
+        textAlign:"center", color:"#0b3d91",
+        fontSize:"clamp(1.5rem,4vw,2rem)", fontWeight:800, marginBottom:"50px",
+        marginTop:"50px"
+      }}>
+        Choose Your Plan
+      </h2>
+
+      <div className="pricing-grid-container">
+        {coursePlans.map((plan) => (
+          <div className="pricing-card" key={plan.tier}>
+            {plan.popular && <div className="popular-badge">Most Popular</div>}
+            <h3 className="plan-title">{plan.tier}</h3>
+            <div className="price-text">{plan.price}</div>
+            <p className="plan-desc">{plan.description}</p>
+
+            <ul>
+              <li><FaCheckCircle color="#28a745" /> {plan.access} Access</li>
+              <li><FaCheckCircle color="#28a745" /> {plan.support}</li>
+              <li><FaCheckCircle color="#28a745" /> {plan.keyFeature}</li>
+            </ul>
+
+            <button
+              className="btn-plan-enroll"
+              onClick={() => handleEnrollClick(plan.tier)}
+            >
+              Enroll Now
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* ENROLL MODAL */}
+      <EnrollModal
+        show={showModal}
+        plan={selectedPlan}
+        onClose={() => setShowModal(false)}
+      />
+    </>
+  );
+};
+
+export default ChooseYourPlan;
