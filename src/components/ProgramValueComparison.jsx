@@ -141,7 +141,6 @@ const ChooseYourPlan = () => {
           <div className="pricing-card" key={plan.tier}>
             {plan.popular && <div className="popular-badge">Most Popular</div>}
             <h3 className="plan-title">{plan.tier}</h3>
-            <div className="price-text">{plan.price}</div>
             <p className="plan-desc">{plan.description}</p>
 
             <ul>
@@ -171,3 +170,4 @@ const ChooseYourPlan = () => {
 };
 
 export default ChooseYourPlan;
+
