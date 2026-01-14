@@ -62,14 +62,14 @@ const facultyData = [
         image: null, 
         initial: "P"
     },
-      { 
-        name: "Dr.Ganeshan", 
-        role: "Clinical Research Mentor", 
-        exp: "15+ Years",
-        details: "Doctorate in Microbiology, with diverse experience in various fields like Biologicals, Diagnostics and Medical Devices.  Certified and have hands on experience in Regulatory Affairs. Subject Expert in Q A and QC.", 
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
-        initial: "G" 
-    },
+    //   { 
+    //     name: "Dr.Ganeshan", 
+    //     role: "Clinical Research Mentor", 
+    //     exp: "15+ Years",
+    //     details: "Doctorate in Microbiology, with diverse experience in various fields like Biologicals, Diagnostics and Medical Devices.  Certified and have hands on experience in Regulatory Affairs. Subject Expert in Q A and QC.", 
+    //     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
+    //     initial: "G" 
+    // },
     { 
         name: "Cassia", 
         role: "CDM Professional", 
@@ -274,5 +274,6 @@ const AboutUsPage = () => (
         </Container>
     </div>
 );
+
 
 export default AboutUsPage;
