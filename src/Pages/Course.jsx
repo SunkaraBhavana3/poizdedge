@@ -9,7 +9,7 @@ import {
   FaHandsHelping,
 } from "react-icons/fa";
 import axios from "axios";
-
+import EnrollModal from "../components/EnrollModal";
 /* -------------------- PLAN DATA -------------------- */
 const coursePlans = [
   {
@@ -64,7 +64,7 @@ const injectCardStyles = () => {
       text-align: center;
     }
     .reg-hero-content h1 {
-      font-size: clamp(1.8rem, 5vw, 2.6rem); /* Fluid typography */
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
       color: #0b3d91;
       font-weight: 800;
       margin-bottom: 15px;
@@ -161,7 +161,13 @@ const injectCardStyles = () => {
       flex-direction: column;
       transition: 0.3s ease;
     }
-    .pricing-card:hover { transform: translateY(-5px); }
+    
+    /* Hover effect for all cards, including Classic */
+    .pricing-card:hover { 
+      transform: translateY(-8px); 
+      border: 1.5px solid #0b3d91;
+      box-shadow: 0 15px 35px rgba(11, 61, 145, 0.15);
+    }
 
     .popular-badge {
       position: absolute;
@@ -171,10 +177,11 @@ const injectCardStyles = () => {
       background: #0b3d91;
       color: #fff;
       padding: 4px 14px;
-      border-radius: 20px;
+      border-radius: 4px;
       font-size: 0.75rem;
       font-weight: 700;
       white-space: nowrap;
+      text-transform: uppercase;
     }
 
     .price-text {
@@ -182,17 +189,48 @@ const injectCardStyles = () => {
       font-weight: 900;
       color: #0b3d91;
       margin: 10px 0;
+      text-align: center;
     }
 
     .pricing-card ul { list-style: none; padding: 0; margin: 20px 0; flex-grow: 1; }
     .pricing-card li {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 12px;
       font-size: 0.9rem;
       color: #555;
       text-align: left;
+    }
+    
+    /* FIXED POSITION TICKS */
+    .pricing-card li svg {
+        flex-shrink: 0;
+        margin-top: 3px;
+    }
+
+    /* MODERN RECTANGULAR ENROLL BUTTON */
+    .enroll-btn-wrapper {
+      margin-top: auto;
+      text-align: center;
+    }
+    .btn-plan-enroll {
+      display: block;
+      width: 100%;
+      padding: 14px 0;
+      background: #0b3d91;
+      color: #fff !important;
+      border-radius: 8px; /* Rectangular corners */
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(11, 61, 145, 0.1);
+    }
+    .btn-plan-enroll:hover {
+      background: #083070;
+      box-shadow: 0 6px 15px rgba(11, 61, 145, 0.2);
+      transform: translateY(-1px);
     }
 
     /* COURSE GRID */
@@ -252,13 +290,10 @@ const injectCardStyles = () => {
       .reg-hero-section { padding: 40px 15px; }
       .main-content-padding { padding: 20px 15px; }
       .goal-buttons-container { grid-template-columns: repeat(2, 1fr); }
-      .btn-goal { padding: 10px; font-size: 0.85rem; }
     }
 
     @media (max-width: 480px) {
-      .goal-buttons-container { grid-template-columns: 1fr; }
       .pricing-grid-container { grid-template-columns: 1fr; }
-      .course-grid-container { grid-template-columns: 1fr; }
       .price-text { font-size: 1.8rem; }
     }
   `;
@@ -274,11 +309,13 @@ const CourseGrid = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeGoal, setActiveGoal] = useState("knowledge");
+    const [showModal, setShowModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("");
 
   useEffect(() => {
     injectCardStyles();
     axios
-      .get("http://localhost:5000/api/course")
+      .get("https://poizdedgebackend.onrender.com/api/course")
       .then((res) => {
         setCourses(res.data);
         setLoading(false);
@@ -291,6 +328,11 @@ const CourseGrid = () => {
     interview: "Get interview-ready with practical training and confidence building.",
     beginner: "Start from basics with step-by-step learning for beginners.",
     mentorship: "Learn with friendly mentors who guide you personally.",
+  };
+
+   const handleEnrollClick = (planTier) => {
+    setSelectedPlan(planTier);
+    setShowModal(true);
   };
 
   const filteredCourses = useMemo(() => {
@@ -306,9 +348,7 @@ const CourseGrid = () => {
         <div className="reg-hero-content">
           <h1>Register for Free Demo Classes and Webinar!</h1>
           <p>Learn with clarity, confidence, and real-world examples from experts.</p>
-          <Link to="/register" className="btn-reg-submit">
-            Join Us 
-          </Link>
+          <Link to="/register" className="btn-reg-submit">Join Us</Link>
         </div>
       </section>
 
@@ -335,27 +375,43 @@ const CourseGrid = () => {
           <div className="goal-info-box">{goalContent[activeGoal]}</div>
         </div>
 
-        {/* PRICING SECTION */}
-        <h2 style={{ textAlign: "center", color: "#0b3d91", fontSize: "2rem", fontWeight: 800, marginBottom: "30px" }}>
-          Choose Your Plan
-        </h2>
+       {/* PRICING SECTION */}
+<h2 style={{ textAlign: "center", color: "#0b3d91", fontSize: "2rem", fontWeight: 800, marginBottom: "30px" }}>
+  Choose Your Plan
+</h2>
 
-        <div className="pricing-grid-container">
-          {coursePlans.map((plan) => (
-            <div className="pricing-card" key={plan.tier}>
-              {plan.popular && <div className="popular-badge">Most Popular</div>}
-              <h3 style={{ color: "#0b3d91", margin: 0, fontSize: '1.2rem' }}>{plan.tier}</h3>
-              <div className="price-text">{plan.price}</div>
-              <p style={{ color: "#666", fontSize: "0.85rem", margin: 0, lineHeight: 1.4 }}>{plan.description}</p>
-              
-              <ul>
-                <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.access} Access</span></li>
-                <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.support}</span></li>
-                <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.keyFeature}</span></li>
-              </ul>
-            </div>
-          ))}
-        </div>
+<div className="pricing-grid-container">
+  {coursePlans.map((plan) => (
+    <div className="pricing-card" key={plan.tier}>
+      {plan.popular && <div className="popular-badge">Most Popular</div>}
+      <h3 style={{ color: "#0b3d91", margin: 0, fontSize: '1.2rem', textAlign:'center' }}>{plan.tier}</h3>
+      <div className="price-text">{plan.price}</div>
+      <p style={{ color: "#666", fontSize: "0.85rem", margin: 0, lineHeight: 1.4, textAlign:'center' }}>{plan.description}</p>
+      
+      <ul>
+        <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.access} Access</span></li>
+        <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.support}</span></li>
+        <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.keyFeature}</span></li>
+      </ul>
+
+      <div className="enroll-btn-wrapper">
+        <button
+          className="btn-plan-enroll"
+          onClick={() => handleEnrollClick(plan.tier)}
+        >
+          Enroll Now
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
+{/* ENROLL MODAL – Render only once at page level */}
+<EnrollModal
+  show={showModal}
+  plan={selectedPlan}
+  onClose={() => setShowModal(false)}
+/>
 
         {/* COURSES SECTION */}
         <h2 style={{ textAlign: "center", color: "#0b3d91", marginTop: "60px", fontSize: "1.8rem", fontWeight: 800 }}>
@@ -369,10 +425,7 @@ const CourseGrid = () => {
             {filteredCourses.map((course) => (
               <div className="course-card" key={course._id}>
                 <div className="course-image-wrapper">
-                  <img
-                    src={course.imageBase64 || course.image || "https://via.placeholder.com/400x250"}
-                    alt={course.title}
-                  />
+                  <img src={course.imageBase64 || course.image || "https://via.placeholder.com/400x250"} alt={course.title} />
                 </div>
                 <div className="course-card-content">
                   <h3 style={{ color: "#0b3d91", marginBottom: "8px", fontSize: '1.1rem', lineHeight: 1.3 }}>{course.title}</h3>
@@ -381,11 +434,8 @@ const CourseGrid = () => {
                     <FaStar color="#ffc107" /> {course.rating || 5.0}
                   </p>
                 </div>
-                <div className="course-card-footer">
-                  <strong style={{ fontSize: "1.1rem", color: "#0b3d91" }}>₹{course.price}</strong>
-                  <Link to={`/enrollment/${course.courseId}`} className="btn-enroll">
-                    Enroll
-                  </Link>
+               <div className="course-card-footer" style={{ justifyContent: "left" }}>
+                  <Link to={`/enrollment/${course.courseId}`} className="btn-enroll">Enroll</Link>
                 </div>
               </div>
             ))}
