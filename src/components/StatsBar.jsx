@@ -20,7 +20,7 @@ const StatsBar = () => {
         if (data.success && data.stats) {
           setStats({
             students: data.stats.totalEnrollments || 0,
-            teachers: data.stats.totalInstructors || 2,
+            teachers: data.stats.totalInstructors || 4,
             courses: data.stats.totalCourses || 0,
             successRate: 97,
           });
@@ -108,3 +108,4 @@ const StatsBar = () => {
 };
 
 export default StatsBar;
+
