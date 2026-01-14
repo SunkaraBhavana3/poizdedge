@@ -48,9 +48,9 @@ const coreValuesData = [
 const facultyData = [
     { 
         name: "Bhanu Melvin", 
-        role: "Clinical Research Mentor", 
-        exp: "15+ Years",
-        details: "PhD, CCRP Certified. Expert in Drug Development, Clinical Trial Management, and Regulatory Compliance.", 
+        role: "Lead Industry Trainer & Clinical Research Expert", 
+        exp: "13+ Years",
+       details: "A Lean Six Sigma Black Belt with 13+ years of industry expertise, Bhanu has mentored over 2,000 professionals. Known for her student-centric and friendly approach, she simplifies complex subjects like Regulatory Affairs and SAS Programming through personalized mentorship, making her a favorite among aspiring clinical researchers.",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
         initial: "B" 
     },
@@ -58,7 +58,7 @@ const facultyData = [
         name: "K. Preethi Sagar",
         role: "Academia & Pharmacology",
         exp: "9+ Years",
-        details: "Expert in Pharmacology. She delivers high-quality instruction across all core clinical courses.",
+        details: "A seasoned educator with 9 years of experience and a Master’s in Pharmacology, Preethi Sagar provides the expert foundational training essential for every student at the PoizdEdge Institute for Clinical Excellence.",
         image: null, 
         initial: "P"
     },
@@ -66,17 +66,17 @@ const facultyData = [
     //     name: "Dr.Ganeshan", 
     //     role: "Clinical Research Mentor", 
     //     exp: "15+ Years",
-    //     details: "Doctorate in Microbiology, with diverse experience in various fields like Biologicals, Diagnostics and Medical Devices.  Certified and have hands on experience in Regulatory Affairs. Subject Expert in Q A and QC.", 
+    //     details: "Dr. Ganeshan brings a wealth of knowledge from his Doctorate in Microbiology and 15+ years in Medical Devices. Known for his infectious enthusiasm and patient teaching, he transforms technical QA/QC training into an engaging, hands-on experience. He isn't just a trainer; he's a dedicated mentor who takes the time to ensure every student truly grasps the material with a smile and expert support.",
     //     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
     //     initial: "G" 
     // },
     { 
         name: "Cassia", 
-        role: "CDM Professional", 
+        role: "Senior Clinical Data Management Professional", 
         exp: "9+ Years",
-        details: "Master’s in Botany | Veeva | Inform | Clinical Data Management With extensive hands-on experience in startup, conduct, and close-out activities, drives efficient data management solutions.", 
+        details: "A Master’s in Botany and a specialist in Veeva and Inform platforms, Cassia brings 9+ years of end-to-end CDM expertise to the institute. She is widely recognized for her approachable and supportive mentoring style, seamlessly guiding students through the complexities of clinical data startup, conduct, and close-out. Her ability to simplify technical workflows with a friendly, student-first approach makes her an invaluable mentor for aspiring CDM professionals.",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
-        initial: "G" 
+        initial: "C" 
     }
 ];
 
@@ -274,6 +274,5 @@ const AboutUsPage = () => (
         </Container>
     </div>
 );
-
 
 export default AboutUsPage;
