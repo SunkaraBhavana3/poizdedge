@@ -385,7 +385,6 @@ const CourseGrid = () => {
     <div className="pricing-card" key={plan.tier}>
       {plan.popular && <div className="popular-badge">Most Popular</div>}
       <h3 style={{ color: "#0b3d91", margin: 0, fontSize: '1.2rem', textAlign:'center' }}>{plan.tier}</h3>
-      <div className="price-text">{plan.price}</div>
       <p style={{ color: "#666", fontSize: "0.85rem", margin: 0, lineHeight: 1.4, textAlign:'center' }}>{plan.description}</p>
       
       <ul>
@@ -447,3 +446,4 @@ const CourseGrid = () => {
 };
 
 export default CourseGrid;
+
