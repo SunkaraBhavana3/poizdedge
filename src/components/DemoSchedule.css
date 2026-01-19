@@ -1,104 +1,134 @@
-.demo-schedule-section {
-  padding: 50px 20px; /* side padding for mobile */
-  background: #f9f9f9;
+/* ---------------------------------------------------------------------- */
+/* 1. SECTION CONTAINER: CENTERS THE WHOLE COMPONENT */
+/* ---------------------------------------------------------------------- */
+.download-section-container {
+  width: 90%;               /* Use almost full width on small devices */
+  max-width: 800px;         /* Keep it constrained on large screens */
+  margin: 20px auto; 
+  padding: 10px;
 }
 
-.schedule-header {
+.download-section-container h3 {
   text-align: center;
-  font-size: clamp(1.6rem, 4vw, 2rem); /* responsive font size */
-  margin-bottom: 30px;
-  color: #0b3d91;
-  font-weight: 700;
+  margin-bottom: 25px;
+  font-size: 1.4em;
+  color: #123456; 
 }
 
-.demo-list-container {
+/* ---------------------------------------------------------------------- */
+/* 2. CARDS WRAPPER: CENTERS THE TWO CARDS INSIDE THE CONTAINER */
+/* ---------------------------------------------------------------------- */
+.download-cards-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
+  flex-wrap: wrap;           /* Allows wrapping on smaller screens */
+  gap: 20px;                 /* Space between cards */
+  justify-content: center;   /* Horizontally center cards */
 }
 
-.demo-item {
-  display: flex;
-  justify-content: space-between;
+/* ---------------------------------------------------------------------- */
+/* 3. CARD STYLING */
+/* ---------------------------------------------------------------------- */
+.download-register-card {
+  display: flex; 
   align-items: center;
-  width: 100%;
-  max-width: 600px;
-  padding: 20px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  flex-wrap: wrap; /* allow stacking on small screens */
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #007bff; 
+  width: 100%;               /* Full width on small devices */
+  max-width: 350px;          /* Constrain width on desktop */
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.demo-item:hover {
+.download-register-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-.demo-info {
+/* Card Icon */
+.card-icon {
+  font-size: 24px;
+  margin-right: 15px;
+  padding: 5px;
+  background-color: #f0f0ff; 
+  border-radius: 4px;
+}
+
+/* Card Content */
+.card-content {
   display: flex;
+  justify-content: space-between; 
   align-items: center;
-  gap: 10px; /* spacing between icon and text */
-  flex: 1 1 60%; /* take up 60% of space */
+  flex-grow: 1; 
+  flex-wrap: wrap;           /* Wrap content if space is tight */
+  gap: 10px;                 /* Space between title and button on small screens */
 }
 
-.demo-info p {
+/* Card Title */
+.card-title {
   margin: 0;
-  font-size: 16px;
+  font-size: 1em;
   color: #333;
+  font-weight: normal; 
 }
 
-.demo-time {
-  color: #555;
+.title-bold {
+  font-weight: 800;
+  color: #123456; 
+  margin-right: 4px; 
 }
 
-/* BUTTON STYLING */
+/* Download Button */
 .register-button {
-  background-color: #0b3d91; /* match other CTAs */
-  color: #fff;
-  padding: 12px 18px;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 700;
-  flex: 1 1 35%;
-  margin-left: 10px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  text-decoration: none;
+  background-color: #007bff; 
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap; 
+  transition: background-color 0.2s, transform 0.2s;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
 .register-button:hover {
-  background-color: #083070;
-  transform: translateY(-2px);
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
-.register-button .arrow {
+.arrow {
   margin-left: 5px;
   font-weight: 900;
   font-size: 1.2em;
 }
 
-/* MOBILE RESPONSIVE */
-@media screen and (max-width: 480px) {
-  .demo-item {
-    flex-direction: column; /* stack vertically */
+/* ---------------------------------------------------------------------- */
+/* 4. MEDIA QUERIES: MOBILE FRIENDLY */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .download-cards-wrapper {
+    flex-direction: column;  /* Stack cards vertically */
+    gap: 15px;
+  }
+
+  .download-register-card {
+    max-width: 100%;         /* Full width on mobile */
+  }
+
+  .card-content {
+    flex-direction: column;  /* Stack title above button */
     align-items: flex-start;
+    gap: 8px;
   }
 
-  .demo-info {
-    width: 100%;
-    margin-bottom: 10px;
-  }
+ .register-button {
+  padding: 10px 18px;
+  border-radius: 8px;
+}
 
-  .register-button {
-    width: 100%;
-    flex: unset;
-    margin-left: 0;
-    margin-top: 10px;
+  .card-title {
+    font-size: 0.95em;
   }
 }
