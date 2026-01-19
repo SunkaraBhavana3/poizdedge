@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
+import { useAuth } from "./AuthContext"; // your auth context
+import { toast } from "react-toastify";
 import "./DemoSchedule.css";
 
 const demoSchedule = [
@@ -9,6 +11,19 @@ const demoSchedule = [
 ];
 
 const DemoSchedule = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+const handleRegisterClick = () => {
+  if (!user) {
+    toast.info("Please login to register 🔐");
+    // pass current location to login page
+    navigate("/login", { state: { from: window.location.pathname } });
+    return;
+  }
+  navigate("/register");
+};
+
   return (
     <div className="demo-schedule-section" id="demo">
       <h2 className="schedule-header">🎉 Try Before You Buy: Free Live Demos</h2>
@@ -22,9 +37,13 @@ const DemoSchedule = () => {
                 <small className="demo-time"> | {demo.time}</small>
               </p>
             </div>
-            <Link to="/Register" className="register-button">
+            {/* ❌ Don't use Link, use button with click handler */}
+            <button
+              onClick={handleRegisterClick}
+              className="register-button"
+            >
               Register Now →
-            </Link>
+            </button>
           </div>
         ))}
       </div>
