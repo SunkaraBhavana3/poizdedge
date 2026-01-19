@@ -1,5 +1,5 @@
 import React from 'react';
-import institutelogo2 from "../assets/institutelogo2.png";
+import institutelogo2 from "../assets/image.jpg";
 
 const HeroSection = () => {
   const primaryBlue = '#1E3A8A';
