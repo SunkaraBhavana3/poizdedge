@@ -63,7 +63,7 @@ const App = () => {
         <div className="filter-bar-container bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4 w-full">
 
-            <span className="text-lg font-semibold text-indigo-700 min-w-max">
+            <span className="text-lg font-semibold text-[#007bff] min-w-max">
               Find Your Perfect Course:
             </span>
 
@@ -78,13 +78,14 @@ const App = () => {
               ))}
             </select>
 
-            <button
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-[1.02] flex items-center justify-center space-x-2 w-full md:w-auto min-w-[120px]"
-              onClick={handleSearch}
-            >
-              <Search size={18} />
-              <span>Search</span>
-            </button>
+         <button
+  className="bg-[#007bff] hover:bg-[#0069d9] text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-[1.02] flex items-center justify-center space-x-2 w-full md:w-auto min-w-[120px]"
+  onClick={handleSearch}
+>
+  <Search size={18} />
+  <span>Search</span>
+</button>
+
 
           </div>
         </div>
@@ -137,3 +138,4 @@ const App = () => {
 };
 
 export default App;
+
