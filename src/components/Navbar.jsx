@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import institutelogo2 from "../assets/institutelogo2.png";
+import institutelogo2 from "../assets/image.jpg";
 import { Menu, X } from "lucide-react";
 import { useAuth } from "./AuthContext";
 
@@ -248,3 +248,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
