@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
-
+import image from "../assets/1768544850194.jpg";
 // --- UI Constants ---
 const UI_COLORS = {
     primaryBlue: "#1E3A8A", 
@@ -51,7 +51,7 @@ const facultyData = [
         role: "Lead Industry Trainer & Clinical Research Expert", 
         exp: "13+ Years",
        details: "A Lean Six Sigma Black Belt with 13+ years of industry expertise, Bhanu has mentored over 2,000 professionals. Known for her student-centric and friendly approach, she simplifies complex subjects like Regulatory Affairs and SAS Programming through personalized mentorship, making her a favorite among aspiring clinical researchers.",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
+        image: image, 
         initial: "B" 
     },
     {
