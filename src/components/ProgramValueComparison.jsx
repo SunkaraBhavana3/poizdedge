@@ -1,41 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import EnrollModal from "./EnrollModal"; // Make sure path is correct
+import { useAuth } from "./AuthContext"; // ✅ import auth context
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import EnrollModal from "./EnrollModal";
 
 /* -------------------- PLAN DATA -------------------- */
 const coursePlans = [
   {
-    tier: "Online",
+    tier: "Self paced learning",
     price: "₹4,999",
-    description: "Ideal for beginners who need flexible, self-paced access.",
-    keyFeature: "Self-paced flexibility",
-    access: "3 Months",
-    support: "Community Forums",
+    description:  "Flexible self-paced learning designed for beginners, allowing you to learn comfortably at your own pace.",
+    keyFeature:  "Ideal for Beginners & Aspirants",
+    access: "Learn at Your Own Comfort",
+    support: "Pause & Restart Anytime",
   },
   {
     tier: "Intermediate",
     price: "₹9,999",
-    description: "Structured learning with basic instructor support.",
-    keyFeature: "Structured Learning Path",
-    access: "6 Months",
-    support: "Email / Chat Support",
+    description: "Trainer-assisted learning with live interactive sessions, doubt clearing, and progress-based assessments.",
+    keyFeature: "Doubt Clearing & Assessments",
+    access: "Live Interactive Sessions",
+    support: "Trainer Assisted Learning",
   },
   {
     tier: "Classic",
     price: "₹14,999",
-    description: "Our most popular option including live classes.",
-    keyFeature: "Live Classes & Doubt Clearing",
-    access: "9 Months",
-    support: "Dedicated Mentor",
+    description: "Most popular learning plan with industry and interview-focused live sessions, exclusive Q&A, and project-based assessment.",
+    keyFeature: "Industry Project Based on Assessment",
+    access: "Industry & Interview Focused Learning",
+    support: "Live Sessions with Exclusive Q&A",
     popular: true,
   },
   {
     tier: "Premium",
     price: "₹24,999",
-    description: "Ultimate package with 1:1 mentorship and placement.",
-    keyFeature: "1:1 Mentorship & Placement",
-    access: "1 Year + Lifetime",
-    support: "Personal Coach",
+    description:  "Exclusive mentorship for limited candidates with focused individual guidance, skill improvement, and interview readiness.",
+    keyFeature: "Interview Readiness & Soft Skills",
+    access: "Exclusive Mentorship Program",
+    support: "Limited Candidates – Individual Focus",
   },
 ];
 
@@ -44,27 +47,30 @@ const injectPlanStyles = () => {
   if (document.getElementById("choose-plan-styles")) return;
 
   const css = `
-    .pricing-grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin: 30px auto;
-      max-width: 1200px;
-      padding: 0 12px;
-    }
-    .pricing-card {
-      background: #fff;
-      padding: 30px 20px;
-      border-radius: 14px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.05);
-      border: 1px solid #e1e9f5;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      transition: 0.3s ease;
-      max-width: 280px;
-      margin: auto;
-    }
+   .pricing-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 1200px;
+    padding: 0 12px;
+    align-items: stretch;
+  }
+
+   .pricing-card {
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.05);
+    border: 1px solid #e1e9f5;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease;
+    width: 100%;
+    height: 100%;
+  }
+
     .pricing-card:hover { 
       transform: translateY(-6px); 
       border-color: #0b3d91; 
@@ -116,23 +122,37 @@ const injectPlanStyles = () => {
 const ChooseYourPlan = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
+  const { user } = useAuth(); // ✅ get user
+  const navigate = useNavigate();
 
   useEffect(() => {
     injectPlanStyles();
   }, []);
 
+  /* -------------------- ENROLL BUTTON CLICK -------------------- */
   const handleEnrollClick = (planTier) => {
+    if (!user) {
+      toast.info("Please login to enroll 🔐");
+      navigate("/login", { state: { from: window.location.pathname } });
+      return;
+    }
+
     setSelectedPlan(planTier);
     setShowModal(true);
   };
 
   return (
     <>
-      <h2 style={{
-        textAlign:"center", color:"#0b3d91",
-        fontSize:"clamp(1.5rem,4vw,2rem)", fontWeight:800, marginBottom:"50px",
-        marginTop:"50px"
-      }}>
+      <h2
+        style={{
+          textAlign: "center",
+          color: "#0b3d91",
+          fontSize: "clamp(1.5rem,4vw,2rem)",
+          fontWeight: 800,
+          marginBottom: "50px",
+          marginTop: "50px",
+        }}
+      >
         Choose Your Plan
       </h2>
 
@@ -144,9 +164,15 @@ const ChooseYourPlan = () => {
             <p className="plan-desc">{plan.description}</p>
 
             <ul>
-              <li><FaCheckCircle color="#28a745" /> {plan.access} Access</li>
-              <li><FaCheckCircle color="#28a745" /> {plan.support}</li>
-              <li><FaCheckCircle color="#28a745" /> {plan.keyFeature}</li>
+              <li>
+                <FaCheckCircle color="#28a745" /> {plan.access} Access
+              </li>
+              <li>
+                <FaCheckCircle color="#28a745" /> {plan.support}
+              </li>
+              <li>
+                <FaCheckCircle color="#28a745" /> {plan.keyFeature}
+              </li>
             </ul>
 
             <button
@@ -170,4 +196,3 @@ const ChooseYourPlan = () => {
 };
 
 export default ChooseYourPlan;
-
