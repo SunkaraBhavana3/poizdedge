@@ -1,12 +1,14 @@
 .demo-schedule-section {
-  padding: 50px 20px; /* Add some padding on sides for mobile */
+  padding: 50px 20px; /* side padding for mobile */
   background: #f9f9f9;
 }
 
 .schedule-header {
   text-align: center;
-  font-size: 28px;
+  font-size: clamp(1.6rem, 4vw, 2rem); /* responsive font size */
   margin-bottom: 30px;
+  color: #0b3d91;
+  font-weight: 700;
 }
 
 .demo-list-container {
@@ -20,55 +22,83 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* full width for responsiveness */
-  max-width: 600px; /* limit max width for bigger screens */
+  width: 100%;
+  max-width: 600px;
   padding: 20px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  flex-wrap: wrap; /* allow wrapping on small screens */
+  flex-wrap: wrap; /* allow stacking on small screens */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.demo-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
 
 .demo-info {
   display: flex;
   align-items: center;
   gap: 10px; /* spacing between icon and text */
-  flex: 1 1 60%; /* grow/shrink and take up 60% width */
+  flex: 1 1 60%; /* take up 60% of space */
 }
 
 .demo-info p {
   margin: 0;
   font-size: 16px;
+  color: #333;
 }
 
 .demo-time {
   color: #555;
 }
 
+/* BUTTON STYLING */
 .register-button {
-  text-decoration: none;
-  background: #007bff;
+  background-color: #0b3d91; /* match other CTAs */
   color: #fff;
-  padding: 10px 18px;
+  padding: 12px 18px;
   border-radius: 8px;
   text-align: center;
-  flex: 1 1 35%; /* take up 35% width, shrink on small screens */
-  margin-top: 10px; /* margin for mobile stacking */
+  font-weight: 700;
+  flex: 1 1 35%;
+  margin-left: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-button:hover {
+  background-color: #083070;
+  transform: translateY(-2px);
+}
+
+.register-button .arrow {
+  margin-left: 5px;
+  font-weight: 900;
+  font-size: 1.2em;
 }
 
 /* MOBILE RESPONSIVE */
 @media screen and (max-width: 480px) {
   .demo-item {
     flex-direction: column; /* stack vertically */
-    align-items: flex-start; /* align to left */
+    align-items: flex-start;
   }
 
   .demo-info {
     width: 100%;
+    margin-bottom: 10px;
   }
 
   .register-button {
     width: 100%;
-    margin-top: 15px;
+    flex: unset;
+    margin-left: 0;
+    margin-top: 10px;
   }
 }
