@@ -1,145 +1,235 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "./AuthContext";
+import { toast } from "react-toastify";
+
+const DEMO_API = "https://poizdedgebackend.onrender.com/api/demo";
+const REGISTER_API = "https://poizdedgebackend.onrender.com/api/register";
 
 const RegisterForm = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    email: user?.email || "",
     phone: "",
     profession: "",
     demo: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [demos, setDemos] = useState([]);
+  const [loadingDemos, setLoadingDemos] = useState(true);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  // Pre-fill demo from URL query param (e.g. /register?demo=bindu)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const preSelectedDemo = params.get("demo");
+    if (preSelectedDemo) {
+      setFormData((prev) => ({ ...prev, demo: decodeURIComponent(preSelectedDemo) }));
+    }
+  }, [location.search]);
+
+  // Fetch demos
+  useEffect(() => {
+    const fetchDemos = async () => {
+      try {
+        const res = await axios.get(DEMO_API);
+        setDemos(res.data || []);
+      } catch (err) {
+        console.error("Failed to load demos:", err);
+        setError("Could not load available demos.");
+      } finally {
+        setLoadingDemos(false);
+      }
+    };
+    fetchDemos();
+  }, []);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingSubmit(true);
     setMessage("");
     setError("");
 
     const { name, email, phone, profession, demo } = formData;
 
     if (!name || !email || !phone || !profession || !demo) {
-      setError("All fields are required, including demo selection.");
-      setLoading(false);
+      setError("All fields are required.");
+      setLoadingSubmit(false);
       return;
     }
 
     try {
-      const res = await axios.post(
-        "https://poizdedgebackend.onrender.com/api/register",
-        formData
-      );
-      setMessage(res.data.message);
-      setFormData({
+      const res = await axios.post(REGISTER_API, formData);
+      setMessage(res.data.message || "Registration successful! 🎉");
+
+      // Mark this demo as registered in localStorage
+      if (user?.email) {
+        const key = `registered_demos_${user.email}`;
+        const saved = JSON.parse(localStorage.getItem(key) || "[]");
+        if (!saved.includes(demo)) {
+          const updated = [...saved, demo];
+          localStorage.setItem(key, JSON.stringify(updated));
+        }
+      }
+
+      // Reset form except email (keep prefilled)
+      setFormData((prev) => ({
+        ...prev,
         name: "",
-        email: "",
         phone: "",
         profession: "",
         demo: "",
-      });
+      }));
+
+      // Optional: redirect back to home or demo page after success
+      setTimeout(() => navigate("/"), 3000);
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong.");
+      setError(err.response?.data?.message || "Registration failed.");
     } finally {
-      setLoading(false);
+      setLoadingSubmit(false);
     }
   };
 
   return (
     <div
       style={{
-        maxWidth: 500,
-        margin: "90px auto",          // ⬅️ FIXED top cut
-        padding: "30px 20px",         // ⬅️ extra top padding
-        border: "1px solid #ccc",
-        borderRadius: 10,
-        backgroundColor: "#ffffff",
-        boxSizing: "border-box",
+        maxWidth: 520,
+        margin: "90px auto",
+        padding: "40px 25px",
+        border: "1px solid #ddd",
+        borderRadius: 12,
+        background: "#fff",
+        boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
       }}
     >
-      <h2 style={{ marginTop: 0, marginBottom: 20 }}>
-        Register for Free Demo and Webinar
+      <h2 style={{ textAlign: "center", marginBottom: 30, color: "#1e3a8a" }}>
+        Register for Free Demo / Webinar
       </h2>
 
-      {message && <p style={{ color: "green" }}>{message}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {message && (
+        <p style={{ color: "green", textAlign: "center", fontWeight: "bold", marginBottom: 20 }}>
+          {message}
+        </p>
+      )}
+      {error && (
+        <p style={{ color: "#e63946", textAlign: "center", fontWeight: "bold", marginBottom: 20 }}>
+          {error}
+        </p>
+      )}
 
       <form onSubmit={handleSubmit}>
-        {["name", "email", "phone", "profession"].map((field) => (
-          <div key={field} style={{ marginBottom: 15 }}>
-            <label style={{ display: "block", marginBottom: 5 }}>
-              {field.charAt(0).toUpperCase() + field.slice(1)}
-            </label>
-            <input
-              type={field === "email" ? "email" : "text"}
-              name={field}
-              value={formData[field]}
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ display: "block", marginBottom: 6, fontWeight: 500 }}>Name</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Enter your name"
+            style={{ width: "100%", padding: 12, borderRadius: 6, border: "1px solid #ccc" }}
+            required
+          />
+        </div>
+
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ display: "block", marginBottom: 6, fontWeight: 500 }}>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Your email"
+            style={{ width: "100%", padding: 12, borderRadius: 6, border: "1px solid #ccc" }}
+            required
+          />
+        </div>
+
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ display: "block", marginBottom: 6, fontWeight: 500 }}>Phone</label>
+          <input
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Enter your phone number"
+            style={{ width: "100%", padding: 12, borderRadius: 6, border: "1px solid #ccc" }}
+            required
+          />
+        </div>
+
+        <div style={{ marginBottom: 30 }}>
+          <label style={{ display: "block", marginBottom: 6, fontWeight: 500 }}>Profession</label>
+          <input
+            type="text"
+            name="profession"
+            value={formData.profession}
+            onChange={handleChange}
+            placeholder="Your profession / field"
+            style={{ width: "100%", padding: 12, borderRadius: 6, border: "1px solid #ccc" }}
+            required
+          />
+        </div>
+
+        <div style={{ marginBottom: 30 }}>
+          <label style={{ display: "block", marginBottom: 8, fontWeight: 500 }}>
+            Select Demo / Webinar
+          </label>
+
+          {loadingDemos ? (
+            <p style={{ color: "#666" }}>Loading available demos...</p>
+          ) : demos.length === 0 ? (
+            <p style={{ color: "#e63946" }}>No demos available right now.</p>
+          ) : (
+            <select
+              name="demo"
+              value={formData.demo}
               onChange={handleChange}
-              placeholder={`Enter your ${field}`}
               style={{
                 width: "100%",
-                padding: 10,
-                borderRadius: 5,
+                padding: 12,
+                borderRadius: 6,
                 border: "1px solid #ccc",
+                fontSize: 16,
               }}
-            />
-          </div>
-        ))}
-
-        {/* Demo Selection */}
-        <div style={{ marginBottom: 20 }}>
-          <label style={{ display: "block", marginBottom: 5 }}>
-            Select Free Demo
-          </label>
-          <select
-            name="demo"
-            value={formData.demo}
-            onChange={handleChange}
-            style={{
-              width: "100%",
-              padding: 10,
-              borderRadius: 5,
-              border: "1px solid #ccc",
-            }}
-          >
-            <option value="">-- Select Demo --</option>
-            <option value="Pharmacovigilance">Pharmacovigilance</option>
-            <option value="Clinical Research (CR)">
-              Clinical Research (CR)
-            </option>
-            <option value="Regulatory Affairs (RA)">
-              Regulatory Affairs (RA)
-            </option>
-            <option value="Clinical SAS Programming">
-              Clinical SAS Programming
-            </option>
-            <option value="Clinical Data Management">
-              Clinical Data Management
-            </option>
-          </select>
+              required
+            >
+              <option value="">-- Choose a Demo --</option>
+              {demos.map((demo) => (
+                <option key={demo._id} value={demo.name}>
+                  {demo.name} ({demo.demoTime || "Time TBA"})
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loadingSubmit || loadingDemos || demos.length === 0}
           style={{
             width: "100%",
-            padding: 12,
-            backgroundColor: "#0077b6",
-            color: "#ffffff",
+            padding: 14,
+            backgroundColor: loadingSubmit ? "#aaa" : "#0077b6",
+            color: "#fff",
             border: "none",
-            borderRadius: 5,
-            cursor: "pointer",
+            borderRadius: 8,
+            fontSize: 17,
+            fontWeight: 600,
+            cursor: loadingSubmit ? "not-allowed" : "pointer",
           }}
         >
-          {loading ? "Registering..." : "Register"}
+          {loadingSubmit ? "Registering..." : "Register Now"}
         </button>
       </form>
     </div>
