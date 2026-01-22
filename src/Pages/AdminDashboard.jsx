@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const COURSE_API = "http://localhost:5000/api/course";
-const DEMO_API   = "http://localhost:5000/api/demo";
+const COURSE_API = "https://poizdedgebackend.onrender.com/api/course";
+const DEMO_API   = "https://poizdedgebackend.onrender.com/api/demo";
 
 const AdminDashboard = () => {
   const token = localStorage.getItem("token");
@@ -631,3 +631,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
