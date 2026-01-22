@@ -157,7 +157,7 @@ const handleSubmit = async (e) => {
 
     // 2️⃣ Send data to backend first
     const res = await axios.post(
-      "http://localhost:5000/api/auth/register",
+      "https://poizdedgebackend.onrender.com/api/auth/register",
       backendData
     );
 
@@ -281,3 +281,4 @@ const handleSubmit = async (e) => {
 };
 
 export default SignUpPage;
+
