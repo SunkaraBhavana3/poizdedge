@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import "./DemoSchedule.css";
 
-const DEMO_API = "http://localhost:5000/api/demo";
-const REGISTER_CHECK_API = "http://localhost:5000/api/register/my-demos";
+const DEMO_API = "https://poizdedgebackend.onrender.com/api/demo";
+const REGISTER_CHECK_API = "https://poizdedgebackend.onrender.com/api/register/my-demos";
 
 const DemoSchedule = () => {
   const { user } = useAuth();
@@ -146,3 +146,4 @@ const DemoSchedule = () => {
 };
 
 export default DemoSchedule;
+
