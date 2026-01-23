@@ -62,19 +62,27 @@ const facultyData = [
         image: null, 
         initial: "P"
     },
-    //   { 
-    //     name: "Dr.Ganeshan", 
-    //     role: "Clinical Research Mentor", 
-    //     exp: "15+ Years",
-    //     details: "Dr. Ganeshan brings a wealth of knowledge from his Doctorate in Microbiology and 15+ years in Medical Devices. Known for his infectious enthusiasm and patient teaching, he transforms technical QA/QC training into an engaging, hands-on experience. He isn't just a trainer; he's a dedicated mentor who takes the time to ensure every student truly grasps the material with a smile and expert support.",
-    //     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
-    //     initial: "G" 
-    // },
+       { 
+        name: "Dr.Shari Ganeshan", 
+         role: "Clinical Research Mentor", 
+         exp: "15+ Years",
+         details: "Dr. Ganeshan brings a wealth of knowledge from his Doctorate in Microbiology and 15+ years in Medical Devices. Known for his infectious enthusiasm and patient teaching, he transforms technical QA/QC training into an engaging, hands-on experience. He isn't just a trainer; he's a dedicated mentor who takes the time to ensure every student truly grasps the material with a smile and expert support.",
+         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
+         initial: "G" 
+     },
     { 
         name: "Cassia", 
         role: "Senior Clinical Data Management Professional", 
         exp: "9+ Years",
         details: "A Master’s in Botany and a specialist in Veeva and Inform platforms, Cassia brings 9+ years of end-to-end CDM expertise to the institute. She is widely recognized for her approachable and supportive mentoring style, seamlessly guiding students through the complexities of clinical data startup, conduct, and close-out. Her ability to simplify technical workflows with a friendly, student-first approach makes her an invaluable mentor for aspiring CDM professionals.",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
+        initial: "C" 
+    },
+    { 
+        name: "Anila K N", 
+        role: "Clinical Research & Hepatology ", 
+        exp: "10+ Years",
+        details: "A University Gold Medalist and seasoned Doctoral Researcher with over a decade of expertise in pharmacy and clinical research. Anila K N provides the high-level academic mentorship and specialized clinical insights  essential for student success. Currently spearheading advanced research in liver transplantation and bile acid pathways , she expertly bridges the gap between complex pharmacological theory and real-world surgical outcomes.",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", 
         initial: "C" 
     }
