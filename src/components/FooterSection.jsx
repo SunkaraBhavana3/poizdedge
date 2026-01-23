@@ -9,7 +9,7 @@ import {
   Instagram,
   Linkedin,
 } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logo from '../assets/image.png';
 import { Youtube } from 'react-bootstrap-icons';
 
 const FooterSection = () => {
@@ -185,3 +185,4 @@ const FooterSection = () => {
 };
 
 export default FooterSection;
+
