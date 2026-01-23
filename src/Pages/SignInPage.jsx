@@ -3,39 +3,43 @@ import React, { useState } from "react";
 import { auth } from "../firebase"; // your firebase config
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 const SignInPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showForgot, setShowForgot] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  /* --------------------------
-      LOGIN HANDLER
-  ----------------------------- */
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const { email, password } = formData;
+  // --------------------------
+  // LOGIN HANDLER
+  // --------------------------
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = formData;
 
-  if (!email || !password) {
-    toast.error("Please fill in all fields");
-    return;
-  }
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    toast.success("Login successful 🎉");
-    navigate("/courses");
-  } catch (err) {
-    toast.error(err.message);
-  }
-};
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Login successful 🎉");
 
+      // ✅ Redirect back to the page user wanted, or to home if none
+      const from = location.state?.from || "/";
+      navigate(from, { replace: true });
 
-  /* --------------------------
-      FORGOT PASSWORD
-  ----------------------------- */
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
+  // --------------------------
+  // FORGOT PASSWORD HANDLER
+  // --------------------------
   const handleForgotPassword = async () => {
     if (!formData.email) {
       toast.error("Please enter your email");
