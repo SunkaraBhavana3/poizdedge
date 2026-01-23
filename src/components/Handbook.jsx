@@ -30,7 +30,7 @@ function BrochureGate() {
       setEmail("");
       setPhone("");
       
-      alert("Details saved successfully! Opening brochure now.");
+      alert("Details saved successfully! Opening handbook now.");
 
 
     } catch (error) {
@@ -41,7 +41,7 @@ function BrochureGate() {
 
   return (
     <div style={{ width: "300px", margin: "50px auto", textAlign: "center" , paddingTop:'65px'}}>
-      <h3>Enter Details to View Brochure</h3>
+      <h3>Enter Details to View Handbook</h3>
 
       <input
         type="email"
@@ -76,4 +76,4 @@ function BrochureGate() {
   );
 }
 
-export default BrochureGate;
+export default HandbookGate;
