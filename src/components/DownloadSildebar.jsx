@@ -1,15 +1,18 @@
 // DownloadSildebar.jsx
 import React from 'react';
-import { Link } from "react-router-dom";   // 💙 IMPORTANT import
+import { Link } from "react-router-dom"; 
 import './DownloadSildebar.css'; 
-
+import Handbook from "../assets/Handbook.pdf";
 const DownloadSildebar = () => {
-  const brochurePath = "/path/to/your/brochure.pdf";
-  const handbookPath = "/path/to/your/handbook.pdf";
-
   const CalendarIcon = () => (
     <span className="card-icon" role="img" aria-label="calendar">
       📅
+    </span>
+  );
+
+  const HandbookIcon = () => (
+    <span className="card-icon" role="img" aria-label="handbook">
+      📖
     </span>
   );
 
@@ -17,19 +20,17 @@ const DownloadSildebar = () => {
 
   return (
     <div className="download-section-container"> 
-      <h3>⬇️ Download Your Resources: Brochure & Handbook ⬇️</h3>
+      <h3>⬇️ Download Your Resources ⬇️</h3>
       
       <div className="download-cards-wrapper"> 
         
         {/* --- Brochure Download Card --- */}
         <div className="download-register-card brochure-card">
           <CalendarIcon />
-          
           <div className="card-content">
             <p className="card-title">
               <span className="title-bold">Brochure</span> | Full Course Catalog
             </p>
-
             {/* Go to BrochureAccess page */}
             <Link to="/brochure" className="register-button">
               Download Now <RegisterArrow />
@@ -37,21 +38,19 @@ const DownloadSildebar = () => {
           </div>
         </div>
 
-        {/* --- Handbook Download Card ---
+        {/* --- Handbook Download Card --- */}
         <div className="download-register-card handbook-card">
-          <CalendarIcon />
-          
+          <HandbookIcon />
           <div className="card-content">
-  <p className="card-title">
-    <span className="title-bold">Brochure</span> | Full Course Catalog
-  </p>
-
-  <Link to="/brochure" className="register-button">
-    Download Now <RegisterArrow />
-  </Link>
-</div>
-
-        </div> */}
+            <p className="card-title">
+              <span className="title-bold">Handbook</span> | Student Guidelines
+            </p>
+            {/* Go to Handbook page */}
+            <Link to={Handbook} className="register-button">
+              Download Now <RegisterArrow />
+            </Link>
+          </div>
+        </div>
 
       </div> 
     </div>
