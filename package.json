@@ -10,6 +10,7 @@
     "axios": "^1.13.2",
     "bootstrap": "^5.3.8",
     "firebase": "^12.7.0",
+    "framer-motion": "^12.27.5",
     "lucide-react": "^0.548.0",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
