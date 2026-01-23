@@ -46,7 +46,7 @@ const DownloadSildebar = () => {
               <span className="title-bold">Handbook</span> | Student Guidelines
             </p>
             {/* Go to Handbook page */}
-            <Link to={Handbook} className="register-button">
+            <Link to=/handbook className="register-button">
               Download Now <RegisterArrow />
             </Link>
           </div>
@@ -58,3 +58,4 @@ const DownloadSildebar = () => {
 };
 
 export default DownloadSildebar;
+
