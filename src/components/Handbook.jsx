@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 // **DELETED: import brochure from './Brochure.pdf';** // The file is now accessed via its public URL.
 
-function BrochureGate() {
+function HandbookGate() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
