@@ -25,6 +25,7 @@ import RegisterForm from "./components/RegisterForm";
 import AdminDashboard from "./Pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BrochureAccess from "./components/BrochureAccess";
+import Handbook from "./components/Handbook";
 import DownloadSidebar from "./components/DownloadSildebar";
 import AdminRoute from "./components/AdminRoute";
 import './App.css';
@@ -67,6 +68,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/brochure" element={<BrochureAccess />} />
+          <Route path="/handbook" element={<Handbook />} />
 
           {/* ================= COURSES (Protected) ================= */}
           <Route
