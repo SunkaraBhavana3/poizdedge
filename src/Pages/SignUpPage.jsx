@@ -67,7 +67,27 @@ const SignUpPage = () => {
   const [errors, setErrors] = useState({});
 
   const courseOptions = ['Select a course','Clinial Research','Pharmacovigilance','Clinical SAS Programming','Clinical Data Management','Regulatory Affairs'];
-  const qualificationOptions = ['Select qualification','High School','Associate Degree',"Bachelor's Degree","Master's Degree",'Ph.D.'];
+ const qualificationOptions = [
+  'Select qualification',
+  'B.Pharm',
+  'M.Pharm',
+  'Pharm.D',
+  'MBBS',
+  'BDS',
+  'BHMS',
+  'BAMS',
+  'B.Sc',
+  'M.Sc',
+  'BE',
+  'B.Tech',
+  'Life Science',
+   "Pharmacy",
+  "Bachelor's Degree",
+  "Master's Degree",
+  'Ph.D.',
+  "others"
+];
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -281,4 +301,3 @@ const handleSubmit = async (e) => {
 };
 
 export default SignUpPage;
-
