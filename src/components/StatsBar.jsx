@@ -7,10 +7,8 @@ const StatsBar = () => {
     students: 0,
     teachers: 0,
     courses: 0,
-    successRate: 97,
   });
 
-  // 🔹 Fetch stats from backend
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -20,32 +18,26 @@ const StatsBar = () => {
         if (data.success && data.stats) {
           setStats({
             students: data.stats.totalEnrollments || 0,
-            teachers: data.stats.totalInstructors || 3,
+            teachers: data.stats.totalInstructors || 5,
             courses: data.stats.totalCourses || 0,
-            successRate: 97,
           });
         }
       } catch (err) {
         console.error("Error fetching stats:", err);
       }
     };
-
     fetchStats();
   }, []);
 
-  // 🔹 Rounded "+" formatter (used only where needed)
   const formatRounded = (num) => {
     if (num <= 0) return "0";
-    if (num < 10) return `${num}`; // no plus for single digit
-
+    if (num < 10) return `${num}`;
     const digits = Math.floor(Math.log10(num));
     const base = Math.pow(10, digits);
     const rounded = Math.floor(num / base) * base;
-
     return `${rounded}+`;
   };
 
-  // 🔹 CountUp animation
   const CountUp = ({ end, disablePlus = false, suffix = "" }) => {
     const [count, setCount] = useState(0);
 
@@ -53,7 +45,6 @@ const StatsBar = () => {
       let start = 0;
       const duration = 1500;
       const increment = end / (duration / 16);
-
       const timer = setInterval(() => {
         start += increment;
         if (start >= end) {
@@ -63,50 +54,42 @@ const StatsBar = () => {
           setCount(Math.floor(start));
         }
       }, 16);
-
       return () => clearInterval(timer);
     }, [end]);
 
     return (
-      <p
-        className="text-3xl font-extrabold mb-1"
-        style={{ color: accentLightBlue }}
-      >
+      <p className="text-3xl md:text-4xl font-extrabold mb-1" style={{ color: accentLightBlue }}>
         {disablePlus ? `${count}${suffix}` : formatRounded(count)}
       </p>
     );
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10 bg-white">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-b border-gray-200 pb-10">
-        
-        <div>
-          <CountUp end={stats.students} />
-          <p className="text-gray-600 text-sm">Students Enrolled</p>
-        </div>
+    <div className="w-full bg-white py-12">
+      {/* 🔹 Container: centered horizontally with max-width */}
+      <div className="max-w-7xl mx-auto px-6">
+        {/* 🔹 Flex/Grid: Centered items with a clean divider */}
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 lg:gap-24 text-center">
+          
+          <div className="flex flex-col items-center min-w-[120px]">
+            <CountUp end={stats.students} />
+            <p className="text-gray-500 font-medium text-sm uppercase tracking-wider">Students Enrolled</p>
+          </div>
 
-        <div>
-          <CountUp end={stats.teachers} />
-          <p className="text-gray-600 text-sm">Expert Teachers</p>
-        </div>
+          <div className="flex flex-col items-center min-w-[120px]">
+            <CountUp end={stats.teachers} />
+            <p className="text-gray-500 font-medium text-sm uppercase tracking-wider">Expert Teachers</p>
+          </div>
 
-        <div>
-          <CountUp end={stats.courses} />
-          <p className="text-gray-600 text-sm">Courses Available</p>
-        </div>
+          <div className="flex flex-col items-center min-w-[120px]">
+            <CountUp end={stats.courses} />
+            <p className="text-gray-500 font-medium text-sm uppercase tracking-wider">Courses Available</p>
+          </div>
 
-        {/* ✅ SUCCESS RATE — NO PLUS */}
-        <div>
-          <CountUp end={stats.successRate} disablePlus suffix="%" />
-          <p className="text-gray-600 text-sm">Success Rate</p>
         </div>
-
       </div>
     </div>
   );
 };
 
 export default StatsBar;
-
-
