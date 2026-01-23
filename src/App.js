@@ -29,7 +29,7 @@ import DownloadSidebar from "./components/DownloadSildebar";
 import AdminRoute from "./components/AdminRoute";
 import './App.css';
 import WhatsAppChat from "./components/WhatsAppChat";
-
+import VerticalMarquee from "./components/VerticalMarquee";
 function App() {
   return (
     <Router>
@@ -44,8 +44,10 @@ function App() {
             element={
               <>
                 <HeroSection />
+                  
                 <CourseFilterBar />
                 <StatsBar /> {/* LIVE auto-updating stats */}
+              <VerticalMarquee/>
                 <DownloadSidebar/>
                 <TrainingSection />
                 <ProgramValueComparison />
