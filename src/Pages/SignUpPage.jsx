@@ -66,7 +66,7 @@ const SignUpPage = () => {
 
   const [errors, setErrors] = useState({});
 
-  const courseOptions = ['Select a course','Clinial Research','Pharmacovigilance','Clinical SAS Programming','Clinical Data Management','Regulatory Affairs'];
+  const courseOptions = ['Select a course','Clinical Research','Pharmacovigilance','Clinical SAS Programming','Clinical Data Management','Regulatory Affairs'];
  const qualificationOptions = [
   'Select qualification',
   'B.Pharm',
@@ -301,3 +301,4 @@ const handleSubmit = async (e) => {
 };
 
 export default SignUpPage;
+
