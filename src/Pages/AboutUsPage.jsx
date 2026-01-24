@@ -63,7 +63,7 @@ const facultyData = [
         initial: "P"
     },
        { 
-        name: "Dr.Shari Ganeshan", 
+        name: "Dr.Sasya Ganeshan", 
          role: "Clinical Research Mentor", 
          exp: "15+ Years",
          details: "Dr. Ganeshan brings a wealth of knowledge from his Doctorate in Microbiology and 15+ years in Medical Devices. Known for his infectious enthusiasm and patient teaching, he transforms technical QA/QC training into an engaging, hands-on experience. He isn't just a trainer; he's a dedicated mentor who takes the time to ensure every student truly grasps the material with a smile and expert support.",
@@ -284,3 +284,4 @@ const AboutUsPage = () => (
 );
 
 export default AboutUsPage;
+
