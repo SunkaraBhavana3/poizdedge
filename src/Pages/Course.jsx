@@ -10,43 +10,44 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import EnrollModal from "../components/EnrollModal";
+
 /* -------------------- PLAN DATA -------------------- */
 const coursePlans = [
-  {
-    tier: "Online",
-    price: "₹4,999",
-    description: "Ideal for beginners who need flexible, self-paced access.",
-    keyFeature: "Self-paced flexibility",
-    access: "3 Months",
-    support: "Community Forums",
+  
+    {
+    tier: "Self paced learning",
+    // price: "₹4,999",
+    description:  "Flexible self-paced learning designed for beginners, allowing you to learn comfortably at your own pace.",
+    keyFeature:  "Ideal for Beginners & Aspirants",
+    access: "Learn at Your Own Comfort",
+    support: "Pause & Restart Anytime",
   },
   {
     tier: "Intermediate",
-    price: "₹9,999",
-    description: "Structured learning with basic instructor support.",
-    keyFeature: "Structured Learning Path",
-    access: "6 Months",
-    support: "Email / Chat Support",
+    // price: "₹9,999",
+    description: "Trainer-assisted learning with live interactive sessions, doubt clearing, and progress-based assessments.",
+    keyFeature: "Doubt Clearing & Assessments",
+    access: "Live Interactive Sessions",
+    support: "Trainer Assisted Learning",
   },
   {
     tier: "Classic",
-    price: "₹14,999",
-    description: "Our most popular option including live classes.",
-    keyFeature: "Live Classes & Doubt Clearing",
-    access: "9 Months",
-    support: "Dedicated Mentor",
+    // price: "₹14,999",
+    description: "Most popular learning plan with industry and interview-focused live sessions, exclusive Q&A, and project-based assessment.",
+    keyFeature: "Industry Project Based on Assessment",
+    access: "Industry & Interview Focused Learning",
+    support: "Live Sessions with Exclusive Q&A",
     popular: true,
   },
   {
     tier: "Premium",
-    price: "₹24,999",
-    description: "Ultimate package with 1:1 mentorship and placement.",
-    keyFeature: "1:1 Mentorship & Placement",
-    access: "1 Year + Lifetime",
-    support: "Personal Coach",
+    // price: "₹24,999",
+    description:  "Exclusive mentorship for limited candidates with focused individual guidance, skill improvement, and interview readiness.",
+    keyFeature: "Interview Readiness & Soft Skills",
+    access: "Exclusive Mentorship Program",
+    support: "Limited Candidates – Individual Focus",
   },
 ];
-
 /* -------------------- RESPONSIVE STYLES -------------------- */
 const injectCardStyles = () => {
   if (document.getElementById("course-styles")) return;
@@ -93,7 +94,7 @@ const injectCardStyles = () => {
 
     /* CONTAINER */
     .main-content-padding {
-      max-width: 1240px;
+      max-width: 1400px; 
       margin: 0 auto;
       padding: 40px 20px;
     }
@@ -162,7 +163,6 @@ const injectCardStyles = () => {
       transition: 0.3s ease;
     }
     
-    /* Hover effect for all cards, including Classic */
     .pricing-card:hover { 
       transform: translateY(-8px); 
       border: 1.5px solid #0b3d91;
@@ -203,43 +203,36 @@ const injectCardStyles = () => {
       text-align: left;
     }
     
-    /* FIXED POSITION TICKS */
     .pricing-card li svg {
         flex-shrink: 0;
         margin-top: 3px;
     }
 
-    /* MODERN RECTANGULAR ENROLL BUTTON */
-    .enroll-btn-wrapper {
-      margin-top: auto;
-      text-align: center;
-    }
     .btn-plan-enroll {
       display: block;
       width: 100%;
       padding: 14px 0;
       background: #0b3d91;
       color: #fff !important;
-      border-radius: 8px; /* Rectangular corners */
+      border-radius: 8px;
       text-decoration: none;
       font-weight: 700;
       font-size: 1rem;
       transition: all 0.3s ease;
       box-shadow: 0 4px 6px rgba(11, 61, 145, 0.1);
-    }
-    .btn-plan-enroll:hover {
-      background: #083070;
-      box-shadow: 0 6px 15px rgba(11, 61, 145, 0.2);
-      transform: translateY(-1px);
+      cursor: pointer;
+      border: none;
     }
 
-    /* COURSE GRID */
+    /* -------------------- 4-COLUMN CENTERED GRID -------------------- */
     .course-grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex; /* Using flex instead of grid to allow centering remaining cards */
+      flex-wrap: wrap;
+      justify-content: center; /* This centers the 9th and 10th cards */
       gap: 25px;
       margin-top: 30px;
     }
+
     .course-card {
       background: #fff;
       border-radius: 12px;
@@ -247,13 +240,24 @@ const injectCardStyles = () => {
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      height: 100%;
+      /* Logic: (100% / 4) - gap adjustment */
+      width: calc(25% - 20px); 
+      min-width: 280px; 
       border: 1px solid #eee;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
+
+    /* CARD HOVER EFFECT */
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(11, 61, 145, 0.12);
+      border-color: #0b3d91;
+    }
+
     .course-image-wrapper {
       width: 100%;
       height: 180px;
-      background: #fff;
+      background: #f8fafc;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -263,10 +267,25 @@ const injectCardStyles = () => {
     .course-card img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      padding: 10px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
     }
+    
+    .course-card:hover img {
+        transform: scale(1.08);
+    }
+
     .course-card-content { padding: 20px; flex-grow: 1; }
+    
+    .course-card-content h3 {
+        color: #0b3d91;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        line-height: 1.3;
+        height: 2.6em; /* Keeps card heights uniform */
+        overflow: hidden;
+    }
+
     .course-card-footer {
       display: flex;
       justify-content: space-between;
@@ -275,27 +294,29 @@ const injectCardStyles = () => {
       background: #fafafa;
       border-top: 1px solid #eee;
     }
+
     .btn-enroll {
       background: #0b3d91;
       color: #fff;
       padding: 8px 16px;
       border-radius: 6px;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .btn-enroll:hover {
+      background: #000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     /* RESPONSIVE BREAKPOINTS */
-    @media (max-width: 768px) {
-      .reg-hero-section { padding: 40px 15px; }
-      .main-content-padding { padding: 20px 15px; }
-      .goal-buttons-container { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 480px) {
-      .pricing-grid-container { grid-template-columns: 1fr; }
-      .price-text { font-size: 1.8rem; }
-    }
+    @media (max-width: 1200px) { .course-card { width: calc(33.33% - 20px); } }
+    @media (max-width: 900px) { .course-card { width: calc(50% - 20px); } }
+    @media (max-width: 600px) { .course-card { width: 100%; } }
   `;
 
   const style = document.createElement("style");
@@ -309,7 +330,7 @@ const CourseGrid = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeGoal, setActiveGoal] = useState("knowledge");
-    const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 
   useEffect(() => {
@@ -330,7 +351,7 @@ const CourseGrid = () => {
     mentorship: "Learn with friendly mentors who guide you personally.",
   };
 
-   const handleEnrollClick = (planTier) => {
+  const handleEnrollClick = (planTier) => {
     setSelectedPlan(planTier);
     setShowModal(true);
   };
@@ -375,44 +396,44 @@ const CourseGrid = () => {
           <div className="goal-info-box">{goalContent[activeGoal]}</div>
         </div>
 
-       {/* PRICING SECTION */}
-<h2 style={{ textAlign: "center", color: "#0b3d91", fontSize: "2rem", fontWeight: 800, marginBottom: "30px" }}>
-  Choose Your Plan
-</h2>
+        {/* PRICING SECTION */}
+        <h2 style={{ textAlign: "center", color: "#0b3d91", fontSize: "2rem", fontWeight: 800, marginBottom: "30px" }}>
+          Choose Your Plan
+        </h2>
 
-<div className="pricing-grid-container">
-  {coursePlans.map((plan) => (
-    <div className="pricing-card" key={plan.tier}>
-      {plan.popular && <div className="popular-badge">Most Popular</div>}
-      <h3 style={{ color: "#0b3d91", margin: 0, fontSize: '1.2rem', textAlign:'center' }}>{plan.tier}</h3>
-      <p style={{ color: "#666", fontSize: "0.85rem", margin: 0, lineHeight: 1.4, textAlign:'center' }}>{plan.description}</p>
-      
-      <ul>
-        <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.access} Access</span></li>
-        <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.support}</span></li>
-        <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.keyFeature}</span></li>
-      </ul>
+        <div className="pricing-grid-container">
+          {coursePlans.map((plan) => (
+            <div className="pricing-card" key={plan.tier}>
+              {plan.popular && <div className="popular-badge">Most Popular</div>}
+              <h3 style={{ color: "#0b3d91", margin: 0, fontSize: '1.2rem', textAlign:'center' }}>{plan.tier}</h3>
+              <div className="price-text">{plan.price}</div>
+              <p style={{ color: "#666", fontSize: "0.85rem", margin: 0, lineHeight: 1.4, textAlign:'center' }}>{plan.description}</p>
+              
+              <ul>
+                <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.access} Access</span></li>
+                <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.support}</span></li>
+                <li><FaCheckCircle color="#28a745" size={16} /> <span>{plan.keyFeature}</span></li>
+              </ul>
 
-      <div className="enroll-btn-wrapper">
-        <button
-          className="btn-plan-enroll"
-          onClick={() => handleEnrollClick(plan.tier)}
-        >
-          Enroll Now
-        </button>
-      </div>
-    </div>
-  ))}
-</div>
+              <div className="enroll-btn-wrapper">
+                <button
+                  className="btn-plan-enroll"
+                  onClick={() => handleEnrollClick(plan.tier)}
+                >
+                  Enroll Now
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
 
-{/* ENROLL MODAL – Render only once at page level */}
-<EnrollModal
-  show={showModal}
-  plan={selectedPlan}
-  onClose={() => setShowModal(false)}
-/>
+        <EnrollModal
+          show={showModal}
+          plan={selectedPlan}
+          onClose={() => setShowModal(false)}
+        />
 
-        {/* COURSES SECTION */}
+        {/* EXPLORE COURSES SECTION */}
         <h2 style={{ textAlign: "center", color: "#0b3d91", marginTop: "60px", fontSize: "1.8rem", fontWeight: 800 }}>
           Explore Our Courses
         </h2>
@@ -427,13 +448,13 @@ const CourseGrid = () => {
                   <img src={course.imageBase64 || course.image || "https://via.placeholder.com/400x250"} alt={course.title} />
                 </div>
                 <div className="course-card-content">
-                  <h3 style={{ color: "#0b3d91", marginBottom: "8px", fontSize: '1.1rem', lineHeight: 1.3 }}>{course.title}</h3>
+                  <h3>{course.title}</h3>
                   <p style={{ color: "#666", margin: "4px 0", fontSize: '0.85rem' }}>{course.lecture}</p>
                   <p style={{ display: "flex", alignItems: "center", gap: "5px", color: '#444', fontSize: '0.9rem' }}>
                     <FaStar color="#ffc107" /> {course.rating || 5.0}
                   </p>
                 </div>
-               <div className="course-card-footer" style={{ justifyContent: "left" }}>
+                <div className="course-card-footer">
                   <Link to={`/enrollment/${course.courseId}`} className="btn-enroll">Enroll</Link>
                 </div>
               </div>
@@ -446,4 +467,3 @@ const CourseGrid = () => {
 };
 
 export default CourseGrid;
-
