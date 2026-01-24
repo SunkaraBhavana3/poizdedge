@@ -183,10 +183,7 @@ const InstituteCheckout = () => {
             <p style={{ fontSize: "0.9rem" }}>{course.description}</p>
 
             <hr />
-            <div className="d-flex justify-content-between">
-              <h5>Total Payable:</h5>
-              <h5 className="fw-bold">₹ {course.price}</h5>
-            </div>
+           
           </div>
         </div>
 
