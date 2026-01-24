@@ -72,7 +72,7 @@ const StatsBar = () => {
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 lg:gap-24 text-center">
           
           <div className="flex flex-col items-center min-w-[120px]">
-            <CountUp end={stats.students} />
+                <CountUp end={stats.students} disablePlus={true} />
             <p className="text-gray-500 font-medium text-sm uppercase tracking-wider">Students Enrolled</p>
           </div>
 
@@ -93,3 +93,4 @@ const StatsBar = () => {
 };
 
 export default StatsBar;
+
