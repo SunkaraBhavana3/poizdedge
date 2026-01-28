@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const updates = [
-  { id: 1, icon: "🔥", label: "ENROLLMENT", text: "Learn the course with Poizdedge.'", status: "Just now", date: "JAN 21", clock: "18:21" },
+  { id: 1, icon: "🔥", label: "ENROLLMENT", text: "Learn the course with Poizdedge.", status: "Just now", date: "JAN 21", clock: "18:21" },
   // { id: 2, icon: "⚡", label: "FLASH SALE", text: "60% OFF expires in 02:45:12", status: "Limited", date: "JAN 21", clock: "18:15" },
   // { id: 3, icon: "🏆", label: "CERTIFIED", text: "1,200 students graduated this month", status: "Milestone", date: "JAN 20", clock: "14:30" },
   // { id: 4, icon: "💎", label: "NEW COURSE", text: "Advanced React 19 is now available", status: "New", date: "JAN 19", clock: "09:00" },
@@ -98,4 +98,5 @@ const BoldProMarquee = () => {
 
 
 export default BoldProMarquee;
+
 
