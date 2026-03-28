@@ -81,7 +81,7 @@ const Navbar = () => {
               onClick={() => scrollToSection("/", "demo")}
               className={navLinkClass}
             >
-              Demo Class
+              News Room
             </span>
 
            {/* WHY US - HOVER VERSION */}
@@ -248,5 +248,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
