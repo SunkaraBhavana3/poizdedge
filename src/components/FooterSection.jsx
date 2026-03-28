@@ -9,7 +9,7 @@ import {
   Instagram,
   Linkedin,
 } from 'lucide-react';
-import logo from '../assets/image.png';
+import logo from '../assets/logo.png';
 import { Youtube } from 'react-bootstrap-icons';
 
 const FooterSection = () => {
@@ -40,8 +40,8 @@ const FooterSection = () => {
     },
     {
       icon: Phone,
-      text: '8714040888',
-      href: 'tel:8714040888',
+      text: '6238754956',
+      href: 'tel:6238754956',
     },
     {
       icon: MapPin,
@@ -185,4 +185,3 @@ const FooterSection = () => {
 };
 
 export default FooterSection;
-
