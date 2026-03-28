@@ -8,6 +8,19 @@ import "./DemoSchedule.css";
 const DEMO_API = "https://poizdedgebackend.onrender.com/api/demo";
 const REGISTER_CHECK_API = "https://poizdedgebackend.onrender.com/api/register/my-demos";
 
+// ✅ STATIC COMPLETED SEMINAR
+const staticDemos = [
+  {
+    _id: "static-1",
+    name: "Clinical Research Careers 2026: What to Choose & How to Crack Interviews",
+    institute: "The PoizdEdge Institute For Clinical Excellence",
+    description: "Get Interview-Ready in 60 Minutes",
+    date: "24th March 2026, Wednesday",
+    time: "11:00 AM to 12:00 PM",
+    platform: "Google Meet",
+  },
+];
+
 const DemoSchedule = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -18,14 +31,13 @@ const DemoSchedule = () => {
   const [loadingRegistered, setLoadingRegistered] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch all available demos
+  // 🔹 Fetch backend demos
   useEffect(() => {
     const fetchDemos = async () => {
       try {
         const res = await axios.get(DEMO_API);
         setDemos(res.data || []);
       } catch (err) {
-        console.error("Failed to fetch demos:", err);
         setError("Unable to load upcoming demo sessions.");
       } finally {
         setLoadingDemos(false);
@@ -34,7 +46,7 @@ const DemoSchedule = () => {
     fetchDemos();
   }, []);
 
-  // Fetch user's registered demos (only if logged in)
+  // 🔹 Fetch registered demos
   useEffect(() => {
     if (!user?.email) {
       setLoadingRegistered(false);
@@ -43,13 +55,14 @@ const DemoSchedule = () => {
 
     const fetchRegistered = async () => {
       try {
-        const res = await axios.get(`${REGISTER_CHECK_API}?email=${encodeURIComponent(user.email)}`);
+        const res = await axios.get(
+          `${REGISTER_CHECK_API}?email=${encodeURIComponent(user.email)}`
+        );
         if (res.data.success) {
           setRegisteredDemos(res.data.registeredDemos || []);
         }
       } catch (err) {
-        console.error("Failed to fetch registered demos:", err);
-        // Don't block UI — just log error
+        console.error(err);
       } finally {
         setLoadingRegistered(false);
       }
@@ -58,81 +71,86 @@ const DemoSchedule = () => {
     fetchRegistered();
   }, [user?.email]);
 
-  const handleRegisterClick = (demoName) => {
+  // 🔹 Register handler
+  const handleRegisterClick = (demo) => {
     if (!user) {
-      toast.info("Please login to register for the demo 🔐");
+      toast.info("Please login to register 🔐");
       navigate("/login", { state: { from: window.location.pathname } });
       return;
     }
 
-    if (registeredDemos.includes(demoName)) {
-      toast.info(`You are already registered for "${demoName}"!`);
+    if (registeredDemos.includes(demo.name)) {
+      toast.info(`Already registered for "${demo.name}"`);
       return;
     }
 
-    // Go to registration form with demo pre-selected
-    navigate(`/register?demo=${encodeURIComponent(demoName)}`);
+    navigate(`/register?demo=${encodeURIComponent(demo.name)}`);
   };
-
-  const isRegistered = (demoName) => registeredDemos.includes(demoName);
 
   const isLoading = loadingDemos || loadingRegistered;
 
   return (
     <div className="demo-schedule-section" id="demo">
-      <h2 className="schedule-header">
-        🎉 Try Before You Buy: Free Live Demos and Webinars
-      </h2>
 
-      {isLoading && (
-        <div className="loading-message text-center py-8 text-gray-600">
-          Loading demo sessions...
-        </div>
-      )}
+      {/* 🔥 COMPLETED */}
+      <h2 className="schedule-header">🎓 Recent Seminar</h2>
 
-      {error && !isLoading && (
-        <div className="error-message text-center py-8 text-red-600">
-          {error}
-        </div>
-      )}
+      <div className="demo-list-container">
+        {staticDemos.map((demo) => (
+          <div key={demo._id} className="demo-item completed-card">
+            <div className="demo-info">
+              <span className="demo-icon">🎥</span>
+              <div>
+                <p>{demo.name}</p>
+                <span className="demo-time">{demo.institute}</span>
+                <span className="demo-time">📅 {demo.date}</span>
+                <span className="demo-time">⏰ {demo.time}</span>
+                <span className="demo-time">💻 {demo.platform}</span>
+              </div>
+            </div>
+
+            <button className="register-button completed-btn">
+              Completed
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* 🚀 UPCOMING */}
+      <h2 className="schedule-header pt-5">🎉 Upcoming Live Demos</h2>
+
+      {isLoading && <div className="loading">Loading...</div>}
+
+      {error && !isLoading && <div className="error">{error}</div>}
 
       {!isLoading && !error && demos.length === 0 && (
-        <div className="no-demos-message text-center py-8 text-gray-600">
-          No upcoming demo sessions scheduled at the moment.<br />
-          Please check back later!
-        </div>
+        <div className="loading">No upcoming sessions</div>
       )}
 
       {!isLoading && !error && demos.length > 0 && (
-        <div className="demo-list-container space-y-4">
+        <div className="demo-list-container">
           {demos.map((demo) => {
             const demoName = demo.name?.trim() || "Demo Session";
-            const isReg = isRegistered(demoName);
+            const isReg = registeredDemos.includes(demoName);
 
             return (
-              <div
-                key={demo._id}
-                className="demo-item bg-white rounded-lg shadow p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-lg transition-shadow"
-              >
-                <div className="demo-info flex items-start gap-4">
-                  <span className="demo-icon text-4xl">📅</span>
+              <div key={demo._id} className="demo-item">
+                <div className="demo-info">
+                  <span className="demo-icon">📅</span>
                   <div>
-                    <p className="font-semibold text-xl">{demoName}</p>
-                    <p className="text-gray-600 mt-1">
+                    <p>{demoName}</p>
+                    <span className="demo-time">
                       {demo.demoTime || "Time to be announced"}
-                    </p>
+                    </span>
                   </div>
                 </div>
 
                 <button
-                  onClick={() => handleRegisterClick(demoName)}
+                  onClick={() => handleRegisterClick(demo)}
                   disabled={isReg}
-                  className={`register-button px-6 py-3 rounded-full font-medium min-w-[160px] text-center transition-all ${
-                    isReg
-                      ? "bg-green-600 text-white cursor-not-allowed"
-                      : "bg-indigo-600 hover:bg-indigo-700 text-white"
+                  className={`register-button ${
+                    isReg ? "registered" : ""
                   }`}
-                  aria-label={isReg ? "Already registered" : `Register for ${demoName}`}
                 >
                   {isReg ? "Registered ✓" : "Register Now →"}
                 </button>
@@ -146,4 +164,3 @@ const DemoSchedule = () => {
 };
 
 export default DemoSchedule;
-
