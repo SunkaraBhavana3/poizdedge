@@ -117,7 +117,7 @@ const DemoSchedule = () => {
       </div>
 
       {/* 🚀 UPCOMING */}
-      <h2 className="schedule-header pt-5">🎉 Upcoming Live Demos</h2>
+      {/* <h2 className="schedule-header pt-5">🎉 Upcoming Live Demos</h2>
 
       {isLoading && <div className="loading">Loading...</div>}
 
@@ -158,7 +158,7 @@ const DemoSchedule = () => {
             );
           })}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
